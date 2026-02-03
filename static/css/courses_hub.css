@@ -1,0 +1,109 @@
+/* --- Page Header (Consistent) --- */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 5rem 0 3rem;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+
+    /* --- Breadcrumbs --- */
+    .breadcrumb-nav {
+        display: inline-flex;
+        background: white;
+        padding: 5px 5px;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-top: -25px; /* Pulls it up into header */
+        position: relative;
+        z-index: 10;
+    }
+
+    .breadcrumb-item-custom {
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #64748b;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .breadcrumb-item-custom:hover {
+        color: var(--color-primary);
+        background: #f1f5f9;
+    }
+
+    .breadcrumb-item-custom.active {
+        background: var(--color-primary);
+        color: white;
+        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+    }
+
+    /* --- Department Cards --- */
+    .dept-card {
+        background: white;
+        border: none;
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dept-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 6px;
+        background: var(--color-secondary); /* Orange Stripe */
+        transition: height 0.3s ease;
+    }
+
+    .dept-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+    }
+
+    .dept-card:hover::before {
+        height: 10px;
+    }
+
+    .icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background: #f8fafc;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .dept-card:hover .icon-wrapper {
+        background: var(--color-primary);
+        color: white !important;
+    }
+    
+    .dept-card:hover .icon-wrapper i {
+        color: white !important; /* Force icon white on hover */
+    }
+
+    .dept-disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        filter: grayscale(1);
+    }

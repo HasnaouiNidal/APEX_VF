@@ -1,0 +1,145 @@
+  /* --- PAGE HEADER SPECIFIC CSS --- */
+    .page-header {
+        /* Matches your Primary Blue Brand */
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 6rem 0 4rem; /* Spacing for Navbar */
+        position: relative;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+    }
+
+    /* Background Pattern (Optional subtle decoration) */
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+
+    /* --- FILTER BAR --- */
+    .filter-container {
+        transform: translateY(-50%); /* Pulls it up into the header/section gap */
+        z-index: 10;
+        position: relative;
+    }
+
+    .filter-box {
+        background: #ffffff;
+        padding: 10px 15px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: inline-flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-btn {
+        border: none;
+        background: transparent;
+        color: #64748b;
+        font-weight: 600;
+        padding: 8px 24px;
+        border-radius: 40px;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .filter-btn:hover {
+        color: var(--color-primary);
+        background-color: #f1f5f9;
+    }
+
+    .filter-btn.active {
+        background-color: var(--color-primary);
+        color: #ffffff;
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+    }
+
+    /* --- EVENT CARDS --- */
+    .event-card {
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+    }
+
+    .event-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 240px;
+    }
+
+    .event-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .event-card:hover .event-img-wrapper img {
+        transform: scale(1.05); /* Zoom effect */
+    }
+
+    /* Custom Date Badge */
+    .date-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 8px 12px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        min-width: 70px;
+    }
+
+    .date-badge .month {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--color-secondary); /* Orange */
+        letter-spacing: 1px;
+    }
+
+    .date-badge .day {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #1e293b;
+        line-height: 1;
+        margin-top: 2px;
+    }
+
+    .category-badge {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 30px;
+        background: rgba(15, 23, 42, 0.8);
+        color: white;
+        backdrop-filter: blur(4px);
+    }
+
+    /* --- CTA SECTION --- */
+    .cta-box {
+        background: linear-gradient(135deg, var(--color-primary), #1e3a8a);
+        border-radius: 24px;
+        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }

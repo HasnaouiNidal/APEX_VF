@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Post Item{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-primary text-white p-4 text-center">
+                    <h3 class="fw-bold m-0"><i class="fas fa-bullhorn me-2"></i> Report Lost or Found Item</h3>
+                </div>
+                <div class="card-body p-5">
+                    
+                    <form method="POST" action="{{ url_for('add_lost_found') }}" enctype="multipart/form-data">
+                        
+                        <div class="row mb-4">
+                            <label class="form-label fw-bold">What are you reporting?</label>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="type" id="option1" value="lost" required>
+                                <label class="btn btn-outline-danger w-100 py-3 fw-bold rounded-3" for="option1">
+                                    <i class="fas fa-search me-2"></i> I LOST something
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="type" id="option2" value="found">
+                                <label class="btn btn-outline-success w-100 py-3 fw-bold rounded-3" for="option2">
+                                    <i class="fas fa-hand-holding me-2"></i> I FOUND something
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Item Name</label>
+                            <input type="text" name="title" class="form-control form-control-lg bg-light" placeholder="e.g. Blue HP Laptop, Car Keys..." required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Category</label>
+                                <select name="category" class="form-select bg-light" required>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Documents">Documents/ID</option>
+                                    <option value="Clothing">Clothing/Accessories</option>
+                                    <option value="Keys">Keys</option>
+                                    <option value="Books">Books/Supplies</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" name="location" class="form-control bg-light" placeholder="e.g. Amphitheater 2, Cafeteria..." required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Contact Info (WhatsApp)</label>
+                            <input type="text" name="contact_info" class="form-control bg-light" placeholder="+212 6..." required>
+                            <div class="form-text">Students will click this to message you.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea name="description" class="form-control bg-light" rows="4" placeholder="Describe the item (color, brand, distinguishing marks)..."></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Upload Image (Optional)</label>
+                            <input type="file" name="item_image" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow">
+                            Submit Report
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

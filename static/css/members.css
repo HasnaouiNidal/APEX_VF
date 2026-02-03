@@ -1,0 +1,102 @@
+ /* --- PAGE HEADER (Consistent with Events/Articles) --- */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 6rem 0 4rem;
+        position: relative;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+    }
+
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+
+    /* --- TEAM SECTIONS --- */
+    .team-section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--color-primary);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+    }
+    
+    .team-section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: var(--color-secondary); /* Orange underline */
+        margin: 8px auto 0;
+        border-radius: 10px;
+    }
+
+    /* --- MEMBER CARDS --- */
+    .member-card {
+        background: #fff;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        height: 100%;
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+
+    .member-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+    }
+
+    /* Profile Image Container */
+    .img-wrapper {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+    }
+
+    .member-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .member-card:hover .member-img {
+        transform: scale(1.05);
+        border-color: var(--color-secondary); /* Orange border on hover */
+    }
+
+    /* Team Badges (Pills) */
+    .team-badge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        margin-top: 1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Custom Colors for Teams */
+    .badge-board { background: linear-gradient(45deg, #FFD54F, #F59E0B); color: #000; }
+    .badge-media { background: linear-gradient(45deg, #FF6B6B, #EE5253); }
+    .badge-comm { background: linear-gradient(45deg, #54a0ff, #2e86de); }
+    .badge-content { background: linear-gradient(45deg, #1dd1a1, #10ac84); }
+    .badge-org { background: linear-gradient(45deg, #ff9f43, #f368e0); }
+    .badge-it { background: linear-gradient(45deg, #5f27cd, #341f97); }

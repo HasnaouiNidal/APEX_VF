@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Lost & Found{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lost_found.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+    <div class="container">
+        <span class="badge bg-white text-primary rounded-pill px-3 py-2 mb-3 shadow fw-bold">
+            <i class="fas fa-hand-holding-heart me-1"></i> Community Service
+        </span>
+        <h1 class="display-4 fw-bold mb-2" style='color:whitesmoke'>Lost & Found Hub</h1>
+        <p class="lead opacity-75">Help your fellow students find what belongs to them.</p>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('add_lost_found') }}" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow">
+                <i class="fas fa-plus-circle me-2"></i> Post an Item
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="section-padding bg-light pt-0">
+    <div class="container">
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-auto">
+                <ul class="nav nav-pills bg-white p-2 rounded-pill shadow-sm" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button">All Items</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="pills-lost-tab" data-bs-toggle="pill" data-bs-target="#pills-lost" type="button">
+                            <i  class="fas fa-search me-1"></i> Lost
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="pills-found-tab" data-bs-toggle="pill" data-bs-target="#pills-found" type="button">
+                            <i class="fas fa-check-circle me-1"></i> Found
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+            
+            <div class="tab-pane fade show active" id="pills-all">
+                <div class="row g-4">
+                    {% for item in items %}
+                        {% include 'includes/item_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <i class="fas fa-box-open fa-3x mb-3 opacity-50"></i>
+                            <h4>No items reported yet.</h4>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-lost">
+                <div class="row g-4">
+                    {% for item in items if item.type == 'lost' %}
+                        {% include 'includes/item_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <h4>No lost items reported. Good news!</h4>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-found">
+                <div class="row g-4">
+                    {% for item in items if item.type == 'found' %}
+                        {% include 'includes/item_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <h4>No found items reported yet.</h4>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

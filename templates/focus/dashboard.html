@@ -1,0 +1,151 @@
+{% extends "focus/base.html" %}
+{% block focus_content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 fade-in">
+    
+    <div class="lg:col-span-2 space-y-6">
+        <div class="glass-panel rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden bg-white">
+            
+            <div class="flex bg-slate-100 p-1 rounded-xl mb-8">
+                <button onclick="setMode('pomodoro')" id="btn-pomodoro" class="px-6 py-2 rounded-lg text-sm font-bold bg-white text-brand-700 shadow-sm transition-all">Pomodoro</button>
+                <button onclick="setMode('short')" id="btn-short" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors">Short Break</button>
+                <button onclick="setMode('long')" id="btn-long" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors">Deep Focus</button>
+            </div>
+
+            <div class="relative w-64 h-64 flex items-center justify-center mb-8">
+                <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90">
+                    <circle cx="128" cy="128" r="120" stroke="#F1F5F9" stroke-width="8" fill="none"></circle>
+                    <circle id="progress-ring" cx="128" cy="128" r="120" stroke="#1E40AF" stroke-width="8" fill="none" stroke-dasharray="753" stroke-dashoffset="0" stroke-linecap="round" style="transition: stroke-dashoffset 1s linear;"></circle>
+                </svg>
+                <div class="text-center z-10">
+                    <div id="timer-display" class="text-6xl font-bold text-slate-800 tracking-tighter font-heading">25:00</div>
+                    <div id="timer-label" class="text-brand-600 text-xs font-bold tracking-widest mt-2 uppercase">Time to Focus</div>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="toggleTimer()" id="start-btn" class="bg-brand-700 hover:bg-brand-800 text-white px-10 py-3 rounded-full font-bold text-lg shadow-lg shadow-blue-200 transition-transform active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-play"></i> <span>Start Session</span>
+                </button>
+                <button onclick="resetTimer()" class="bg-white border-2 border-slate-100 hover:bg-slate-50 text-slate-600 px-5 py-3 rounded-full font-bold text-lg transition-transform active:scale-95">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="glass-panel rounded-2xl p-6">
+            <h3 class="font-bold text-slate-900 mb-4 font-heading">Daily Goal</h3>
+            <div class="flex justify-between items-end mb-2">
+                <span class="text-4xl font-bold text-brand-700">{{ (today_progress/60)|round(1) }}<span class="text-lg text-slate-400 ml-1">hrs</span></span>
+                <span class="text-sm text-slate-500 font-medium">Target: 2h</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                <div class="bg-gradient-to-r from-brand-500 to-brand-700 h-3 rounded-full transition-all duration-1000" style="width: {{ (today_progress/120)*100 }}%"></div>
+            </div>
+            <p class="text-xs text-slate-400 mt-4 text-center border-t border-slate-50 pt-3">
+                <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i> Earn 10 XP for every minute.
+            </p>
+        </div>
+
+        <div class="glass-panel rounded-2xl p-6">
+            <h3 class="font-bold text-slate-900 mb-4 font-heading">Active Rooms</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 cursor-pointer border border-transparent hover:border-blue-100 transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-white text-brand-600 flex items-center justify-center shadow-sm"><i class="fa-solid fa-code"></i></div>
+                        <div><p class="text-sm font-bold text-slate-800">Devs Only</p><p class="text-xs text-slate-400">12 online</p></div>
+                    </div>
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                 <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-yellow-50 cursor-pointer border border-transparent hover:border-yellow-100 transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-white text-yellow-600 flex items-center justify-center shadow-sm"><i class="fa-solid fa-calculator"></i></div>
+                        <div><p class="text-sm font-bold text-slate-800">Math Club</p><p class="text-xs text-slate-400">8 online</p></div>
+                    </div>
+                     <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let timeLeft = 25 * 60; 
+    let initialTime = 25; 
+    let isRunning = false; 
+    let timerInterval; 
+    let mode = 'pomodoro';
+    
+    const modes = {
+        'pomodoro': { time: 25, label: 'TIME TO FOCUS' },
+        'short': { time: 5, label: 'SHORT BREAK' },
+        'long': { time: 50, label: 'DEEP FOCUS' }
+    };
+
+    function updateDisplay() {
+        let m = Math.floor(timeLeft / 60).toString().padStart(2,'0');
+        let s = (timeLeft % 60).toString().padStart(2,'0');
+        document.getElementById('timer-display').innerText = `${m}:${s}`;
+        
+        const circle = document.getElementById('progress-ring');
+        const radius = 120;
+        const circumference = radius * 2 * Math.PI;
+        const totalSeconds = initialTime * 60;
+        const offset = circumference - (timeLeft / totalSeconds) * circumference;
+        circle.style.strokeDashoffset = offset;
+    }
+
+    function setMode(m) { 
+        mode = m; 
+        initialTime = modes[m].time; 
+        timeLeft = initialTime * 60; 
+        
+        document.querySelectorAll('button[id^="btn-"]').forEach(b => b.className = 'px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors');
+        document.getElementById('btn-'+m).className = 'px-6 py-2 rounded-lg text-sm font-bold bg-white text-brand-700 shadow-sm';
+        document.getElementById('timer-label').innerText = modes[m].label;
+        
+        updateDisplay(); 
+    }
+
+    function toggleTimer() {
+        if(isRunning) { 
+            clearInterval(timerInterval); 
+            document.getElementById('start-btn').innerHTML = '<i class="fa-solid fa-play"></i> <span>Resume</span>'; 
+        } else {
+            timerInterval = setInterval(() => {
+                if(timeLeft > 0) { 
+                    timeLeft--; 
+                    updateDisplay(); 
+                } else { 
+                    completeSession(); 
+                }
+            }, 1000);
+            document.getElementById('start-btn').innerHTML = '<i class="fa-solid fa-pause"></i> <span>Pause</span>';
+        }
+        isRunning = !isRunning;
+    }
+
+    function resetTimer() { 
+        clearInterval(timerInterval); 
+        isRunning = false; 
+        setMode(mode); 
+        document.getElementById('start-btn').innerHTML = '<i class="fa-solid fa-play"></i> <span>Start Session</span>';
+    }
+
+    function completeSession() {
+        clearInterval(timerInterval);
+        alert('Session Complete! XP Added.');
+        
+        fetch("{{ url_for('save_session') }}", {
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ duration: initialTime, mode: mode })
+        }).then(response => {
+            if(response.ok) window.location.reload(); 
+        });
+    }
+    
+    updateDisplay();
+</script>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}APEX | {{ semester }}{% endblock %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/semester_content.css') }}">
+{% endblock %}
+
+{% block content %}
+<header class="page-header">
+    <div class="header-pattern"></div>
+    <div class="container position-relative z-2">
+        <h1 class="display-5 fw-bold mb-2" style="color:whitesmoke">{{ semester }} Content</h1>
+        <p class="opacity-75">Access your course materials and exercises.</p>
+    </div>
+</header>
+
+<div class="container text-center mb-5">
+    <div class="breadcrumb-nav">
+        <a href="{{ url_for('courses_hub') }}" class="breadcrumb-item-custom">Departments</a>
+        <a href="{{ url_for('math_semesters') }}" class="breadcrumb-item-custom">Math</a>
+        <span class="breadcrumb-item-custom active">{{ semester }}</span>
+    </div>
+</div>
+
+<section class="section-padding pt-0" style="min-height: 80vh;">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-3 mb-4">
+                <div class="sem-badge-card sticky-top" style="top: 100px; z-index: 1;">
+                    <div class="display-1 fw-bold mb-2">{{ semester }}</div>
+                    <p class="text-white-50 fw-bold text-uppercase letter-spacing-2 mb-0">Modules</p>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                {% for module_name, chapters in modules.items() %}
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="bg-white p-2 rounded-circle shadow-sm">
+                            <i class="fas fa-book text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark m-0">{{ module_name }}</h5>
+                    </div>
+                    
+                    <div>
+                        {% for chapter in chapters %}
+                        <div class="chapter-item d-flex align-items-center">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="far fa-file-pdf text-danger fa-lg"></i>
+                                <span class="fw-medium text-secondary">{{ chapter.title }}</span>
+                            </div>
+                            
+                            <div class="ms-auto d-flex gap-2">
+                                <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
+                                class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
+                                target="_blank">
+                                    <i class="fas fa-eye me-1"></i> Read
+                                </a>
+
+                                <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
+                                class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
+                                download>
+                                    <i class="fas fa-download me-1"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                                                {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <div class="opacity-50 mb-3"><i class="fas fa-folder-open fa-4x text-muted"></i></div>
+                    <h4 class="text-muted">No content available yet.</h4>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+</section>
+{% endblock %}

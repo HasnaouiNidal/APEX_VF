@@ -1,0 +1,31 @@
+/* Page Specific Styles */
+    .event-header {
+        height: 60vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+    .event-overlay {
+        background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.95));
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+    }
+    .text-shadow-lg {
+        text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    .article-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--color-text-main);
+    }
+    .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+    .hover-primary:hover {
+        color: var(--color-btn) !important;
+        transition: color 0.3s ease;
+    }

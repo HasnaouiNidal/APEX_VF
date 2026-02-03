@@ -1,0 +1,97 @@
+{% extends "focus/base.html" %}
+{% block focus_content %}
+<div class="fade-in">
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-slate-500 font-medium">Manage your study plan</h3>
+        <button onclick="document.getElementById('taskModal').classList.remove('hidden')" class="px-5 py-2.5 bg-brand-700 text-white rounded-full shadow-lg shadow-blue-200 hover:bg-brand-800 transition-all font-bold text-sm flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> New Task
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="space-y-4">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 px-1">
+                <span class="w-2 h-2 rounded-full bg-slate-300"></span> To Do
+            </h3>
+            {% for task in todo %}
+            <div class="glass-card p-4 rounded-xl border-l-4 border-yellow-400 hover:-translate-y-1 transition duration-300 bg-white shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="px-2 py-0.5 bg-yellow-50 text-yellow-700 text-[10px] font-bold uppercase tracking-wide rounded-md">{{ task.category }}</span>
+                    <a href="{{ url_for('start_task', task_id=task.id) }}" class="text-slate-300 hover:text-brand-600 transition-colors" title="Start Task"><i class="fa-solid fa-circle-play text-xl"></i></a>
+                </div>
+                <h4 class="font-bold text-slate-800">{{ task.title }}</h4>
+                <div class="flex items-center justify-between text-xs text-slate-400 mt-4 pt-3 border-t border-slate-50">
+                    <span class="flex items-center gap-1"><i class="fa-regular fa-clock"></i> {{ task.estimated_time }} min</span>
+                </div>
+            </div>
+            {% else %}
+            <div class="p-8 text-center border-2 border-dashed border-slate-200 rounded-xl">
+                <p class="text-sm text-slate-400">No pending tasks.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-xs font-bold text-brand-600 uppercase tracking-wider flex items-center gap-2 px-1">
+                <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span> In Progress
+            </h3>
+            {% for task in progress %}
+            <div class="glass-card p-5 rounded-xl border-l-4 border-brand-600 shadow-lg shadow-blue-100 bg-white ring-1 ring-brand-100">
+                <div class="flex justify-between items-start mb-3">
+                    <span class="px-2 py-0.5 bg-brand-50 text-brand-700 text-[10px] font-bold uppercase tracking-wide rounded-md">{{ task.category }}</span>
+                    <span class="text-[10px] text-brand-600 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-bolt"></i> Active</span>
+                </div>
+                <h4 class="font-bold text-slate-800 text-lg mb-4">{{ task.title }}</h4>
+                <a href="{{ url_for('complete_task', task_id=task.id) }}" class="block w-full text-center bg-brand-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-brand-700 transition shadow-md">Complete & Get XP</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-xs font-bold text-green-600 uppercase tracking-wider flex items-center gap-2 px-1">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> Completed
+            </h3>
+            {% for task in done %}
+            <div class="glass-card p-4 rounded-xl border-l-4 border-green-500 bg-slate-50 opacity-80 hover:opacity-100 transition">
+                <h4 class="font-bold text-slate-500 line-through">{{ task.title }}</h4>
+                <div class="flex items-center gap-2 text-green-600 text-xs font-bold mt-2">
+                    <i class="fa-solid fa-check-circle"></i> Done
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div id="taskModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden flex items-center justify-center z-50 fade-in backdrop-blur-sm">
+    <div class="bg-white p-8 rounded-2xl w-96 shadow-2xl">
+        <h3 class="text-xl font-bold mb-6 text-slate-900 font-heading">Add New Task</h3>
+        <form action="{{ url_for('add_task') }}" method="POST">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Task Title</label>
+                    <input type="text" name="title" placeholder="e.g. Algebra Chapter 1" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Category</label>
+                    <select name="category" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none bg-white">
+                        <option value="Math">Math</option>
+                        <option value="Coding">Coding</option>
+                        <option value="Physics">Physics</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Duration (min)</label>
+                    <input type="number" name="estimated_time" value="25" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 mt-8">
+                <button type="button" onclick="document.getElementById('taskModal').classList.add('hidden')" class="px-5 py-2.5 text-slate-500 font-medium hover:bg-slate-50 rounded-lg transition">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-bold shadow-lg shadow-blue-200 transition">Add Task</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

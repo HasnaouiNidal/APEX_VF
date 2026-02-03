@@ -2,39 +2,47 @@
 
 {% block title %}APEX | Login{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
 {% block content %}
-  <section class="d-flex align-items-center justify-content-center bg-white" style="min-height: 80vh; padding: 50px 0;">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-8">
-          <div class="card p-4 shadow-sm border-0"> <div class="card-body">
-              <h3 class="text-center mb-4 fw-bold">Member Login</h3>
-              
-              <form action="{{ url_for('login') }}" method="POST">
-  
-                  <div class="form-floating mb-3">
-                      <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com" required>
-                      <label for="floatingInput">Email address</label>
-                  </div>
-
-                  <div class="form-floating mb-3">
-                      <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" required>
-                      <label for="floatingPassword">Password</label>
-                  </div>
-
-                  <div class="d-grid">
-                      <button type="submit" class="btn btn-primary py-2">Login</button>
-                  </div>
-              </form>
-
-              <div class="text-center mt-3">
-                <small>Don't have an account? <a href="{{ url_for('register') }}" style="color: var(--bs-primary); text-decoration: none;">Register here</a></small>
-              </div>
-
+  <section class="auth-section">
+    <div class="auth-pattern"></div>
+    
+    <div class="auth-card" data-aos="zoom-in">
+        <div class="text-center">
+            <div class="auth-icon">
+                <i class="fas fa-user-circle"></i>
             </div>
-          </div>
+            <h3 class="auth-title">Welcome Back</h3>
+            <p class="text-muted small mb-4">Please log in to access your space.</p>
         </div>
-      </div>
+
+        <form action="{{ url_for('login') }}" method="POST">
+            
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control rounded-4" name="email" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">Email address</label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control rounded-4" name="password" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="d-grid mb-4">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm fw-bold">
+                    Sign In <i class="fas fa-sign-in-alt ms-2"></i>
+                </button>
+            </div>
+
+        </form>
+
+        <div class="text-center border-top pt-4">
+            <small class="text-muted">Don't have an account?</small>
+            <a href="{{ url_for('register') }}" class="register-link">Create one now</a>
+        </div>
     </div>
   </section>
 {% endblock %}

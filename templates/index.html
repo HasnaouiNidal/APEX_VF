@@ -4,172 +4,179 @@
 
 {% block content %}
 
-  <header class="hero-section">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="col-md-8 mx-auto">
-             <h1 class="display-4 fw-bold mb-4 text-white" data-aos="fade-up">Together, we create real change in people’s lives</h1>
+  <header class="hero-section position-relative">
+    <div class="container position-relative z-2">
+        <div class="row align-items-center">
+            
+            <div class="col-lg-6 hero-text-col mb-5 mb-lg-0" data-aos="fade-right">
+                <h1 class="fw-bold">
+                    Create Real <span class="highlight-text">Change</span> Together
+                </h1>
+                <p class="lead text-secondary mb-4">
+                    Join the APEX community. We are students dedicated to making a tangible impact through teamwork, science, and charity.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg shadow rounded-pill px-4">
+                        <i class="fas fa-rocket me-2"></i> Join Us Now
+                    </a>
+                    <a href="{{ url_for('events') }}" class="btn btn-outline-dark btn-lg rounded-pill px-4">
+                        Explore Events
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="hero-img-container position-relative">
+                    <div class="hero-blob"></div>
+                    <img src="{{ url_for('static', filename='images/hero_pic.jpg') }}" class="img-fluid hero-img-main position-relative z-2 rounded-4" alt="APEX Club Team">
+                </div>
+            </div>
+
         </div>
+    </div>
+
+    <div class="custom-shape-divider-bottom-1">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
     </div>
   </header>
 
-  <section class="section-padding">
+  <section class="section-padding bg-white">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6" data-aos="fade-up">
-            <img src="{{ url_for('static', filename='images/IMG_0513.jpg') }}" class="img-fluid" style="border-radius: 1rem;" alt="Teamwork">
+        <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+            <img src="{{ url_for('static', filename='images/IMG_0513.jpg') }}" class="img-fluid rounded-4 shadow-lg" alt="Teamwork">
         </div>
-        <div class="col-lg-6 mt-4 mt-lg-0 ps-lg-5" data-aos="fade-up">
-          <h2 class="mb-3">About APEX</h2>
-          <p>APEX is a student-led organization at our university dedicated to making a positive impact in our community. We believe in the power of teamwork, compassion, and collective action to address social challenges.</p>
-          <p>Founded in 2023, our club has grown into a vibrant community of passionate students from various disciplines, all united by a common goal: to help those in need and foster a culture of service.</p>
+        
+        <div class="col-lg-6 ps-lg-5" data-aos="fade-left">
+          <h6 class="text-uppercase fw-bold mb-3 text-secondary" style="letter-spacing: 1px;">Who We Are</h6>
+          <h2 class="display-6 fw-bold mb-4">Empowering Students, Impacting Society</h2>
+          <p class="text-muted mb-4">
+              APEX is a student-led organization at our university dedicated to making a positive impact. We believe in the power of teamwork, compassion, and collective action to address social challenges.
+          </p>
+          
+          <div class="d-flex gap-4">
+              <div class="d-flex align-items-center">
+                  <i class="fas fa-check-circle fa-2x text-success me-3"></i>
+                  <div>
+                      <h6 class="fw-bold mb-0">Community</h6>
+                      <small class="text-muted">Social Support</small>
+                  </div>
+              </div>
+              <div class="d-flex align-items-center">
+                  <i class="fas fa-lightbulb fa-2x text-warning me-3"></i>
+                  <div>
+                      <h6 class="fw-bold mb-0">Innovation</h6>
+                      <small class="text-muted">Science & Tech</small>
+                  </div>
+              </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section-padding" style="background-color: var(--secondary-blue);">
-        <div class="container text-center">
-            <h2 class="mb-5 text-white">What We Do</h2>
-            <div class="row">
-                <div class="col-lg-4 mb-4" data-aos="fade-up">
-                    <div class="card card-glass p-4 h-100 text-white">
-                        <h4 class="fw-bold" style="color: var(--accent-gold);">Social and Charitable Aspect :</h4>
-                        <p>Apex Club aims to strengthen social solidarity by organizing visits to institutions for people with special needs and elderly care centers.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card card-glass p-4 h-100 text-white">
-                        <h4 class="fw-bold" style="color: var(--accent-gold);">Scientific and Cultural Aspect :</h4>
-                        <p>Apex Club seeks to enhance scientific and cultural awareness by organizing scientific seminars on various disciplines and topics.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card card-glass p-4 h-100 text-white">
-                        <h4 class="fw-bold" style="color: var(--accent-gold);">Recreational Aspect:</h4>
-                        <p>Apex Club values the importance of leisure and well-being alongside academic life through recreational trips and sports activities.</p>
-                    </div>
-                </div>
-            </div>
+  <section class="section-padding" style="background-color: #f8fafc;">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold">Our Pillars</h2>
+            <p class="text-muted">The core values that drive our activities</p>
         </div>
-  </section>
 
-  <section class="section-padding">
-    <div class="container" data-aos="zoom-in">
-        <div class="text-center">
-            <h2 class="mb-5">How It Works</h2>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-md-3 text-center mb-4">
-                <div class="p-4">
-                    <h3 class="fw-bold" style="color: var(--primary-green);">1. Join</h3>
-                    <p>Register as a member and join our community of changemakers.</p>
-                </div>
-            </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="p-4">
-                    <h3 class="fw-bold" style="color: var(--primary-green);">2. Participate</h3>
-                    <p>Choose projects and events that you are passionate about.</p>
-                </div>
-            </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="p-4">
-                    <h3 class="fw-bold" style="color: var(--primary-green);">3. Collaborate</h3>
-                    <p>Work with fellow members to bring your ideas to life.</p>
-                </div>
-            </div>
-            <div class="col-md-3 text-center mb-4">
-                <div class="p-4">
-                    <h3 class="fw-bold" style="color: var(--primary-green);">4. Impact</h3>
-                    <p>See the tangible difference you make in the community.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
-
-  <section class="section-padding bg-light">
-    <div class="container" data-aos="fade-up">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold" style="color: var(--secondary-blue);">Latest Events & Activities</h2>
-            <p class="text-muted">Join us in our upcoming adventures.</p>
-        </div>
-        <div class="row">
-            {% for event in recent_events %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="position-relative">
-                        <img src="{{ url_for('static', filename='images/' + event.image) }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ event.title }}">
-                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3">{{ event.category }}</span>
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up">
+                <div class="card h-100 p-4 border-0 text-center shadow-sm hover-card">
+                    <div class="mb-3">
+                        <span class="d-inline-block p-3 rounded-circle bg-primary bg-opacity-10 text-primary">
+                            <i class="fas fa-hands-helping fa-2x"></i>
+                        </span>
                     </div>
-                    <div class="card-body">
-                         <small class="text-muted"><i class="far fa-calendar me-1"></i> {{ event.date_str }}</small>
-                         <h5 class="card-title fw-bold mt-2">{{ event.title }}</h5>
-                         <p class="card-text text-muted small">{{ event.description | truncate(100) }}</p>
-                         <a href="{{ url_for('event_detail', id=event.id) }}" class="btn btn-outline-primary btn-sm rounded-pill mt-2">Details</a>
-                    </div>
+                    <h4 class="fw-bold">Social & Charity</h4>
+                    <p class="text-muted small">Organizing visits to institutions and helping those in need to strengthen social bonds.</p>
                 </div>
             </div>
-            {% else %}
-            <div class="col-12 text-center">
-                <p class="text-muted">No events posted yet.</p>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="text-center mt-4">
-            <a href="{{ url_for('events') }}" class="btn btn-outline-dark rounded-pill px-4">View All Events</a>
-        </div>
-    </div>
-  </section>
-
-  <section class="section-padding" style="background-color: var(--secondary-blue);">
-    <div class="container" data-aos="zoom-in">
-        <div class="text-center">
-            <h2 class="mb-5 text-white">Our Recent Articles</h2>
-        </div>
-        <div class="row">
             
-            {% for article in recent_articles %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-lg">
-                    <img src="{{ url_for('static', filename='images/' + article.image) }}" class="card-img-top" alt="Article Image" style="height: 250px; object-fit: cover;">
-                    
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold">{{ article.title }}</h5>
-                        
-                        <span class="badge bg-primary mb-2 align-self-start">{{ article.subject }}</span>
-                        
-                        <p class="card-text text-muted">{{ article.summary | truncate(100) }}</p>
-                        
-                        <a href="{{ url_for('article_detail_dynamic', id=article.id) }}" class="btn btn-outline-dark mt-auto align-self-start">Read Article</a>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 p-4 border-0 text-center shadow-sm hover-card">
+                    <div class="mb-3">
+                        <span class="d-inline-block p-3 rounded-circle bg-warning bg-opacity-10 text-warning">
+                            <i class="fas fa-atom fa-2x"></i>
+                        </span>
                     </div>
+                    <h4 class="fw-bold">Science & Culture</h4>
+                    <p class="text-muted small">Enhancing awareness through scientific seminars, workshops, and cultural discussions.</p>
                 </div>
             </div>
-            {% else %}
-            <div class="col-12 text-center text-white">
-                <div class="p-4 border border-light rounded">
-                    <h3>No articles yet!</h3>
-                    {% if session.get('loggedin') %}
-                        <p>Go to <a href="{{ url_for('add_article') }}" class="text-warning">/add_article</a> to publish your first story.</p>
-                    {% else %}
-                        <p>Stay tuned for upcoming articles!</p>
-                    {% endif %}
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 p-4 border-0 text-center shadow-sm hover-card">
+                    <div class="mb-3">
+                        <span class="d-inline-block p-3 rounded-circle bg-success bg-opacity-10 text-success">
+                            <i class="fas fa-hiking fa-2x"></i>
+                        </span>
+                    </div>
+                    <h4 class="fw-bold">Recreation</h4>
+                    <p class="text-muted small">Valuing well-being through recreational trips, sports, and team-building activities.</p>
                 </div>
             </div>
-            {% endfor %}
-
-        </div>
-        <div class="text-center mt-5">
-            <a href="{{ url_for('articles') }}" class="btn btn-outline-light rounded-pill px-4">Go to Knowledge Hub</a>
         </div>
     </div>
   </section>
 
-  <section class="section-padding">
-    <div class="container text-center">
-      <h2 class="mb-3">Join Us, Support the Cause</h2>
-      <p class="mb-4">Become a part of our mission to create a better world.</p>
-      <a href="{{ url_for('register') }}" class="btn btn-primary me-2 rounded-pill px-4">Join Us</a>
+  <section class="section-padding bg-white">
+    <div class="container" data-aos="fade-up">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h6 class="text-uppercase fw-bold text-primary mb-2">What's Happening</h6>
+                <h2 class="fw-bold m-0">Latest Events</h2>
+            </div>
+            <a href="{{ url_for('events') }}" class="btn btn-outline-primary rounded-pill px-4">View All</a>
+        </div>
+
+        <div class="row g-4">
+            {% for event in recent_events %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='uploads/images/' + event.image) }}" class="card-img-top" alt="{{ event.title }}" style="height: 200px; object-fit: cover;">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 shadow-sm">{{ event.category }}</span>
+                    </div>
+                    <div class="card-body d-flex flex-column p-4">
+                         <div class="text-muted small mb-2">
+                            <i class="far fa-calendar-alt me-1 text-primary"></i> {{ event.date_str }}
+                         </div>
+                         <h5 class="card-title fw-bold mb-3">{{ event.title }}</h5>
+                         <p class="card-text text-muted small flex-grow-1">{{ event.description | truncate(80) }}</p>
+                         <a href="{{ url_for('event_detail', id=event.id) }}" class="fw-bold text-decoration-none mt-3 text-primary">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                         </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <div class="py-5 bg-light rounded-4">
+                    <i class="far fa-calendar-times fa-3x text-muted mb-3"></i>
+                    <p class="text-muted m-0">No upcoming events scheduled right now.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+  </section>
+
+  <section class="py-5 text-center text-white position-relative" style="background: linear-gradient(135deg, #0d6efd 0%, #0f172a 100%);">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mb-3 text-white fw-bold display-6">Ready to make a difference?</h2>
+            <p class="mb-4 text-white-50 lead">Join the Apex Club today and start your journey of leadership, friendship, and impact.</p>
+            <a href="{{ url_for('register') }}" class="btn btn-light text-primary fw-bold px-5 py-3 rounded-pill shadow-lg scale-hover">
+                Join Us Today
+            </a>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -1,59 +1,81 @@
 {% extends "base.html" %}
-
 {% block title %}APEX | Edit Profile{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
 
 {% block content %}
-<section class="d-flex align-items-center bg-light" style="min-height: 85vh; padding: 50px 0;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow border-0 rounded-4">
-                    <div class="card-body p-5">
-                        <h3 class="fw-bold text-primary mb-4"><i class="fas fa-user-edit me-2"></i>Edit Profile</h3>
+<section class="profile-section">
+    <div class="profile-card">
+        
+        <div class="profile-sidebar">
+            <h4 class="mb-4">Profile Settings</h4>
+            <img src="{{ url_for('static', filename='uploads/profiles/' + user.profile_image) }}" 
+                 class="profile-img-pro" id="imgPreview" alt="Profile">
+            
+            <label for="fileInput" class="badge-pill" style="cursor: pointer; background: white; color: var(--color-primary); font-weight: bold;">
+                <i class="fas fa-camera me-1"></i> Change Photo
+            </label>
+        </div>
 
-                        <form action="{{ url_for('edit_profile') }}" method="POST" enctype="multipart/form-data">
-                            
-                            <div class="mb-4 text-center">
-                                <img src="{{ url_for('static', filename='uploads/profiles/' + user.profile_image) }}" 
-                                    class="rounded-circle mb-3 shadow-sm" 
-                                    style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #0d6efd;">
-                                <div class="mt-2">
-                                    <label for="fileInput" class="form-label text-muted">Change Profile Picture</label>
-                                    <input class="form-control" type="file" name="profile_image" id="fileInput">
-                                </div>
-                            </div>
+        <div class="profile-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h6 class="section-title m-0">Edit Details</h6>
+                <a href="{{ url_for('profile') }}" class="text-muted text-decoration-none small"><i class="fas fa-times"></i> Cancel</a>
+            </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">First Name</label>
-                                    <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Last Name</label>
-                                    <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" required>
-                                </div>
-                            </div>
+            <form action="{{ url_for('edit_profile') }}" method="POST" enctype="multipart/form-data">
+                
+                <input type="file" name="profile_image" id="fileInput" class="d-none" onchange="previewImage(event)">
 
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Phone Number</label>
-                                <input type="text" class="form-control" name="phone_number" value="{{ user.phone_number }}" required>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Bio (Tell us about yourself)</label>
-                                <textarea class="form-control" name="bio" rows="4" placeholder="Write something...">{{ user.bio }}</textarea>
-                            </div>
-
-                            <div class="d-flex justify-content-between">
-                                <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary">Cancel</a>
-                                <button type="submit" class="btn btn-primary px-5 fw-bold">Save Changes</button>
-                            </div>
-                            <!--this is a comment !-->
-                        </form>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-control" name="phone_number" value="{{ user.phone_number }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Branch</label>
+                        <select class="form-select" name="branch">
+                            <option value="Math" {% if user.branch == 'Math' %}selected{% endif %}>Mathématiques</option>
+                            <option value="PC" {% if user.branch == 'PC' %}selected{% endif %}>Physique-Chimie</option>
+                            <option value="SVT" {% if user.branch == 'SVT' %}selected{% endif %}>SVT</option>
+                            <option value="Informatique" {% if user.branch == 'Informatique' %}selected{% endif %}>Informatique</option>
+                            <option value="Anglais" {% if user.branch == 'Anglais' %}selected{% endif %}>Anglais</option>
+                            <option value="Sport" {% if user.branch == 'Sport' %}selected{% endif %}>Sport</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Bio</label>
+                        <textarea class="form-control" name="bio" rows="3">{{ user.bio }}</textarea>
                     </div>
                 </div>
-            </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 fw-bold" style="background-color: var(--color-primary); border:none;">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('imgPreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 {% endblock %}

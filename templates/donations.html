@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Donation Corner{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/donations.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+    <div class="container">
+        <span class="badge bg-white text-primary rounded-pill px-3 py-2 mb-3 shadow fw-bold">
+            <i class="fas fa-hand-holding-heart me-1"></i> APEX Charity
+        </span>
+        <h1 class="display-4 fw-bold mb-2" style='color:whitesmoke'>Donation Corner</h1>
+        <p class="lead opacity-75">"None of you will believe until you love for your brother what you love for yourself."</p>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('add_donation') }}" class="btn btn-light text-primary fw-bold rounded-pill px-4 shadow hover-scale">
+                <i class="fas fa-gift me-2"></i> Donate an Item
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="section-padding bg-light pt-0">
+    <div class="container">
+        <div class="row g-4">
+            {% for item in items %}
+                {% include 'includes/donation_card.html' %}
+            {% else %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <div class="mb-3 opacity-50">
+                        <i class="fas fa-parachute-box fa-4x"></i>
+                    </div>
+                    <h4>No items available right now.</h4>
+                    <p>Be the first to donate something!</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

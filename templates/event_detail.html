@@ -2,45 +2,49 @@
 
 {% block title %}APEX | {{ event.title }}{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/event_detail.css') }}">
+{% endblock %}
+
+
 {% block content %}
 
-<header class="position-relative w-100" style="height: 60vh; background: url('{{ url_for('static', filename='images/' + event.image) }}') no-repeat center center/cover;">
+<header class="event-header w-100" style="background-image: url('{{ url_for('static', filename='uploads/images/' + event.image) }}');">
     
-    <div class="overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.9)); position: absolute; top:0; left:0; right:0; bottom:0;"></div>
+    <div class="event-overlay"></div>
     
     <div class="container h-100 d-flex align-items-end pb-5 position-relative" style="z-index: 2;">
-        <div class="col-lg-8">
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 shadow-sm" style="font-size: 0.9rem;">
+        <div class="col-lg-9">
+            <span class="badge bg-warning text-dark mb-3 px-3 py-2 shadow-sm fw-bold">
                 {{ event.category }}
             </span>
             
-            <h1 class="display-3 fw-bold mb-3" style="color: #ffffff !important; text-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <h1 class="display-3 fw-bold mb-3 text-white text-shadow-lg">
                 {{ event.title }}
             </h1>
             
-            <div class="d-flex align-items-center mt-3 text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+            <div class="d-flex align-items-center mt-3 text-white text-shadow-lg">
                 <i class="far fa-calendar-alt me-2 text-warning"></i>
-                <span class="fs-5 fw-medium" style="color: #f1f5f9 !important;">{{ event.date_str }}</span>
+                <span class="fs-5 fw-medium">{{ event.date_str }}</span>
             </div>
         </div>
     </div>
 </header>
 
-<section class="section-padding">
+<section class="section-padding bg-white">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
+                
                 <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
-                    <span class="text-muted small fw-bold text-uppercase">Event Details</span>
+                    <span class="text-muted small fw-bold text-uppercase">Share Event</span>
                     <div>
-                        <span class="me-3 text-muted">Share:</span>
-                        <a href="#" class="text-dark me-3 hover-primary"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="#" class="text-dark me-3 hover-primary"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" class="text-dark hover-primary"><i class="fas fa-link fa-lg"></i></a>
+                        <button class="btn btn-sm btn-outline-primary rounded-circle"><a href='https://web.facebook.com/profile.php?id=61582914692395' class="fab fa-facebook-f"></a></button>
+                        <button class="btn btn-sm btn-outline-info rounded-circle"><a href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' class="fab fa-instagram"></a></button>
                     </div>
                 </div>
 
-                <div class="article-content" style="font-size: 1.15rem; line-height: 1.9; color: var(--text-color);">
+                <div class="article-content">
                     {{ event.content | safe }}
                 </div>
 
@@ -49,17 +53,10 @@
                         <i class="fas fa-arrow-left me-2"></i> Back to All Events
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
 </section>
-
-<style>
-    /* Small hover effect for share icons */
-    .hover-primary:hover {
-        color: var(--primary-green) !important;
-        transition: color 0.3s ease;
-    }
-</style>
 
 {% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Post Housing{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white p-4 text-center">
+                    <h3 class="fw-bold m-0"><i class="fas fa-home me-2"></i> Post Housing Listing</h3>
+                </div>
+                <div class="card-body p-5">
+                    
+                    <form method="POST" action="{{ url_for('add_housing') }}" enctype="multipart/form-data">
+                        
+                        <div class="row mb-4">
+                            <label class="form-label fw-bold">Listing Type</label>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="type" id="type1" value="offer" required>
+                                <label class="btn btn-outline-success w-100 py-3 fw-bold rounded-3" for="type1">
+                                    <i class="fas fa-key me-2"></i> I have a Room
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="type" id="type2" value="request">
+                                <label class="btn btn-outline-warning w-100 py-3 fw-bold rounded-3" for="type2">
+                                    <i class="fas fa-search me-2"></i> I need a Room
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Title</label>
+                            <input type="text" name="title" class="form-control form-control-lg bg-light" placeholder="e.g. Room near ENS, Looking for roommate..." required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" name="location" class="form-control bg-light" placeholder="e.g. Hay Salam" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Price (DH/Month)</label>
+                                <input type="number" name="price" class="form-control bg-light" placeholder="e.g. 800" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Gender Preference</label>
+                                <select name="gender_pref" class="form-select bg-light">
+                                    <option value="any">Any Gender</option>
+                                    <option value="male">Male Only</option>
+                                    <option value="female">Female Only</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">WhatsApp Number</label>
+                                <input type="text" name="contact_info" class="form-control bg-light" placeholder="+212 6..." required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description (Amenities, rules...)</label>
+                            <textarea name="description" class="form-control bg-light" rows="4" placeholder="Describe the house, WiFi, furniture..."></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Upload Photo (Room or House)</label>
+                            <input type="file" name="housing_image" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow">
+                            Post Listing
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

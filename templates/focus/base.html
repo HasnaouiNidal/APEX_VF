@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Room - APEX</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af', /* Your Royal Blue */
+                            900: '#1e3a8a',
+                        },
+                        accent: '#F59E0B', /* Your Orange */
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #F8FAFC; }
+        h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; }
+        
+        .glass-panel { 
+            background: white; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white h-full flex flex-col border-r border-slate-200 hidden md:flex z-20 shadow-sm">
+        <div class="p-6 flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-800 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-200">
+                <i class="fa-solid fa-mountain"></i>
+            </div>
+            <h1 class="text-xl font-extrabold tracking-tight text-slate-900 font-heading">APEX <span class="text-brand-600">Space</span></h1>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="{{ url_for('focus_dashboard') }}" 
+               class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-200' if request.endpoint == 'focus_dashboard' else 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+                <i class="fa-solid fa-stopwatch w-5"></i> Timer & Focus
+            </a>
+            <a href="{{ url_for('focus_tasks') }}" 
+               class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-200' if request.endpoint == 'focus_tasks' else 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+                <i class="fa-solid fa-list-check w-5"></i> Tasks Board
+            </a>
+            <a href="{{ url_for('focus_analytics') }}" 
+               class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-200' if request.endpoint == 'focus_analytics' else 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+                <i class="fa-solid fa-chart-pie w-5"></i> Analytics
+            </a>
+            <a href="{{ url_for('focus_leaderboard') }}" 
+               class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-200' if request.endpoint == 'focus_leaderboard' else 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}">
+                <i class="fa-solid fa-trophy w-5"></i> Leaderboard
+            </a>
+            
+            <div class="mt-8 border-t border-slate-100 pt-4">
+                 <a href="{{ url_for('home') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-brand-600 transition-colors">
+                    <i class="fa-solid fa-arrow-left w-5"></i> Back to Website
+                </a>
+            </div>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold border border-brand-200">
+                    {{ stats.first_name[0] | upper }}
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">{{ stats.first_name }}</p>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <p class="text-xs text-slate-500">Lvl {{ stats.level }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 h-full overflow-y-auto relative p-4 md:p-8 bg-[#F8FAFC]">
+        <header class="flex justify-between items-center mb-8 fade-in">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 font-heading">
+                    {% if request.endpoint == 'focus_dashboard' %} Focus Session
+                    {% elif request.endpoint == 'focus_tasks' %} Task Manager
+                    {% elif request.endpoint == 'focus_analytics' %} Performance Stats
+                    {% elif request.endpoint == 'focus_leaderboard' %} Club Rankings
+                    {% endif %}
+                </h2>
+                <p class="text-sm text-slate-500">Welcome back to your workspace, {{ stats.first_name }}.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                 <div class="hidden sm:flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-bold text-slate-600">Online</span>
+                </div>
+            </div>
+        </header>
+
+        {% block focus_content %}{% endblock %}
+    </main>
+
+</body>
+</html>

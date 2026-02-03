@@ -1,0 +1,125 @@
+/* --- PAGE HEADER (Reused from Events for consistency) --- */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 6rem 0 4rem;
+        position: relative;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+    }
+
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+
+    /* --- FILTER BAR --- */
+    .filter-container {
+        transform: translateY(-50%);
+        z-index: 10;
+        position: relative;
+    }
+
+    .filter-box {
+        background: #ffffff;
+        padding: 10px 15px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: inline-flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-btn {
+        border: none;
+        background: transparent;
+        color: #64748b;
+        font-weight: 600;
+        padding: 8px 24px;
+        border-radius: 40px;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .filter-btn:hover {
+        color: var(--color-primary);
+        background-color: #f1f5f9;
+    }
+
+    .filter-btn.active {
+        background-color: var(--color-primary);
+        color: #ffffff;
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+    }
+
+    /* --- ARTICLE CARDS --- */
+    .article-card {
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .article-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+    }
+
+    .article-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 220px;
+    }
+
+    .article-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .article-card:hover .article-img-wrapper img {
+        transform: scale(1.05);
+    }
+
+    /* Floating Subject Badge */
+    .subject-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Meta Info (Date/Author) */
+    .meta-info {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .meta-info i {
+        color: var(--color-secondary);
+    }
+
+    /* --- CTA Box --- */
+    .cta-box {
+        background: linear-gradient(135deg, #0f172a, var(--color-primary));
+        border-radius: 24px;
+        padding: 4rem 2rem;
+    }

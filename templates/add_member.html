@@ -3,6 +3,7 @@
 {% block title %}Add New Member{% endblock %}
 
 {% block content %}
+<!-- Main Container for Member Addition -->
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,6 +13,7 @@
                 </div>
                 <div class="card-body">
                     
+                    <!-- Flash Messages for Success/Error Feedback -->
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -19,9 +21,11 @@
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
-
+ 
+                    <!-- Member Registration Form -->
                     <form action="{{ url_for('add_member') }}" method="POST" enctype="multipart/form-data">
                         
+                        <!-- Name Fields -->
                         <div class="row mb-3">
                             <div class="col">
                                 <label>First Name</label>
@@ -33,6 +37,7 @@
                             </div>
                         </div>
 
+                        <!-- Contact Information -->
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Email (Must be unique)</label>
@@ -44,6 +49,7 @@
                             </div>
                         </div>
 
+                        <!-- Role and Team Selection -->
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Role (e.g., President, Designer)</label>
@@ -66,11 +72,13 @@
                             </div>
                         </div>
 
+                        <!-- Profile Image Upload -->
                         <div class="mb-4">
                             <label>Profile Picture</label>
                             <input type="file" name="profile_image" class="form-control" required>
                         </div>
 
+                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Add Member & Next</button>
                     </form>
                 </div>

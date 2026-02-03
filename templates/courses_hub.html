@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}APEX | Academic Hub{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/courses_hub.css') }}">
+{% endblock %}
+
+{% block content %}
+<header class="page-header">
+    <div class="header-pattern"></div>
+    <div class="container position-relative z-2">
+        <h1 class="display-5 fw-bold mb-2" style="color:whitesmoke">Academic Departments</h1>
+        <p class="opacity-75">Select your branch to access resources.</p>
+    </div>
+</header>
+
+<div class="container text-center mb-5">
+    <div class="breadcrumb-nav">
+        <span class="breadcrumb-item-custom active">Departments</span>
+    </div>
+</div>
+
+<section class="section-padding pt-0" style="min-height: 60vh;">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+            
+            <div class="col-md-5 col-lg-4">
+                <a href="{{ url_for('math_semesters') }}" class="text-decoration-none">
+                    <div class="dept-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-square-root-alt fa-3x" style="color: var(--color-primary);"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark h4">Mathematics</h3>
+                        <p class="text-muted small mb-4">Algebra, Analysis, Topology, and advanced calculus resources.</p>
+                        <span class="btn btn-outline-primary rounded-pill px-4 fw-bold">Access Courses</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-5 col-lg-4">
+                <div class="dept-card dept-disabled">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-laptop-code fa-3x text-secondary"></i>
+                    </div>
+                    <h3 class="fw-bold text-muted h4">Computer Science</h3>
+                    <p class="text-muted small mb-4">Programming, Algorithms, and Data Structures.</p>
+                    <span class="badge bg-secondary rounded-pill px-3 py-2">Coming Soon</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

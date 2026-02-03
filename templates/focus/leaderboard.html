@@ -1,0 +1,57 @@
+{% extends "focus/base.html" %}
+{% block focus_content %}
+<div class="glass-panel rounded-2xl overflow-hidden fade-in bg-white">
+    <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+        <div>
+            <h3 class="font-bold text-xl text-slate-900 font-heading">Club Leaderboard</h3>
+            <p class="text-sm text-slate-500">Top active students this semester</p>
+        </div>
+        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 text-xl shadow-sm">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-white border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider">
+                <tr>
+                    <th class="p-5 font-bold">Rank</th>
+                    <th class="p-5 font-bold">Student</th>
+                    <th class="p-5 font-bold text-center">Level</th>
+                    <th class="p-5 font-bold text-right">Total XP</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50 text-sm">
+                {% for user in leaders %}
+                <tr class="transition hover:bg-slate-50 {{ 'bg-brand-50/50' if user.first_name == stats.first_name else '' }}">
+                    
+                    <td class="p-5">
+                        {% if loop.index == 1 %}
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 text-white flex items-center justify-center font-bold shadow-md shadow-yellow-200">1</div>
+                        {% elif loop.index == 2 %}
+                            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">2</div>
+                        {% elif loop.index == 3 %}
+                            <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold">3</div>
+                        {% else %}
+                            <span class="text-slate-400 font-bold ml-3 font-mono text-base">{{ loop.index }}</span>
+                        {% endif %}
+                    </td>
+                    
+                    <td class="p-5 flex items-center gap-4">
+                        <img src="{{ url_for('static', filename='uploads/profiles/' + user.profile_image) }}" class="w-10 h-10 rounded-full bg-white ring-2 ring-white shadow-md object-cover">
+                        <span class="font-bold text-slate-800 text-base">{{ user.first_name }} {{ user.last_name }}</span>
+                        {% if loop.index == 1 %}<i class="fa-solid fa-crown text-yellow-400 ml-2 animate-bounce"></i>{% endif %}
+                    </td>
+                    
+                    <td class="p-5 text-center">
+                        <span class="bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 border border-slate-200">Lvl {{ user.level }}</span>
+                    </td>
+                    
+                    <td class="p-5 text-right font-mono font-bold text-brand-700 text-base">{{ user.xp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

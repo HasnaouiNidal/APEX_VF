@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}APEX | Math Semesters{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/math_semesters.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<header class="page-header">
+    <div class="header-pattern"></div>
+    <div class="container position-relative z-2">
+        <h1 class="display-5 fw-bold mb-2" style="color:whitesmoke">Mathematics</h1>
+        <p class="opacity-75">Choose your semester to view modules.</p>
+    </div>
+</header>
+
+<div class="container text-center mb-5">
+    <div class="breadcrumb-nav">
+        <a href="{{ url_for('courses_hub') }}" class="breadcrumb-item-custom">Departments</a>
+        <span class="breadcrumb-item-custom active">Mathematics</span>
+    </div>
+</div>
+
+<section class="section-padding pt-0" style="min-height: 60vh;">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+            {% for sem in semesters %}
+            <div class="col-6 col-md-4 col-lg-3">
+                
+                {% if sem == 'S1' or sem == 'S2' %}
+                    <a href="{{ url_for('semester_content', semester=sem) }}" class="text-decoration-none">
+                        <div class="sem-card">
+                            <div class="sem-title">{{ sem }}</div>
+                            <div class="sem-label">Semester</div>
+                        </div>
+                    </a>
+                {% else %}
+                    <div class="sem-card card-disabled">
+                        <div class="sem-title">{{ sem }}</div>
+                        <div class="sem-label">Coming Soon</div>
+                    </div>
+                {% endif %}
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

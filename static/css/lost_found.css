@@ -1,0 +1,77 @@
+/* Reuse Header Style */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 5rem 0 3rem;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* Item Card Styling */
+    .item-card {
+        border: none;
+        border-radius: 16px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background: #fff;
+    }
+    
+    .item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .item-img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* Status Badges */
+    .badge-lost {
+        background-color: #EF4444; /* Red */
+        color: white;
+        position: absolute;
+        top: 15px; right: 15px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-found {
+        background-color: #10B981; /* Green */
+        color: white;
+        position: absolute;
+        top: 15px; right: 15px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Filter Tabs */
+    .nav-pills .nav-link {
+        border-radius: 50px;
+        padding: 10px 25px;
+        color: #64748b;
+        font-weight: 600;
+        margin: 0 5px;
+    }
+    
+    .nav-pills .nav-link.active {
+        background-color: var(--color-primary);
+        color: white;
+        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+    }
+    /* Fix for invisible text on active tab */
+        .nav-pills .nav-link.active, 
+        .nav-pills .show > .nav-link {
+            color: #ffffff !important; /* Forces text to be white */
+            background-color: #0d6efd; /* Optional: Adjusts blue background if needed */
+        }
+
+        /* Optional: Ensure inactive tabs are clearly dark text */
+        .nav-pills .nav-link {
+            color: #333333; 
+        }

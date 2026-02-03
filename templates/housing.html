@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Housing{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/housing.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+    <div class="container">
+        <span class="badge bg-white text-primary rounded-pill px-3 py-2 mb-3 shadow fw-bold">
+            <i class="fas fa-home me-1"></i> Student Housing
+        </span>
+        <h1 class="display-4 fw-bold mb-2" style='color:whitesmoke'>Find Your Home</h1>
+        <p class="lead opacity-75">Connect with roommates and find available apartments.</p>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('add_housing') }}" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow">
+                <i class="fas fa-plus-circle me-2"></i> Post Listing
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="section-padding bg-light pt-0">
+    <div class="container">
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-auto">
+                <ul class="nav nav-pills bg-white p-2 rounded-pill shadow-sm" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button">All Listings</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="pills-offer-tab" data-bs-toggle="pill" data-bs-target="#pills-offer" type="button">
+                            <i class="fas fa-key me-1"></i> Rooms Available
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="pills-request-tab" data-bs-toggle="pill" data-bs-target="#pills-request" type="button">
+                            <i class="fas fa-user-friends me-1"></i> Roommates Wanted
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+            
+            <div class="tab-pane fade show active" id="pills-all">
+                <div class="row g-4">
+                    {% for item in listings %}
+                        {% include 'includes/housing_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <i class="fas fa-city fa-3x mb-3 opacity-50"></i>
+                            <h4>No listings yet.</h4>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-offer">
+                <div class="row g-4">
+                    {% for item in listings if item.type == 'offer' %}
+                        {% include 'includes/housing_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted"><h4>No rooms available right now.</h4></div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-request">
+                <div class="row g-4">
+                    {% for item in listings if item.type == 'request' %}
+                        {% include 'includes/housing_card.html' %}
+                    {% else %}
+                        <div class="text-center py-5 text-muted"><h4>No roommates needed right now.</h4></div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

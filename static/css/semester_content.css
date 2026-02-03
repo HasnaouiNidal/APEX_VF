@@ -1,0 +1,77 @@
+  /* Reuse Header & Breadcrumb styles */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 5rem 0 3rem;
+        color: white;
+        text-align: center;
+        position: relative;
+    }
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+    .breadcrumb-nav {
+        display: inline-flex;
+        background: white;
+        padding: 5px 5px;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-top: -25px;
+        position: relative;
+        z-index: 10;
+    }
+    .breadcrumb-item-custom {
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #64748b;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .breadcrumb-item-custom:hover { color: var(--color-primary); background: #f1f5f9; }
+    .breadcrumb-item-custom.active { background: var(--color-primary); color: white; }
+
+    /* --- Module Lists --- */
+    .module-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    
+    .module-header {
+        background: #f8fafc;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .chapter-item {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background 0.2s;
+    }
+    
+    .chapter-item:last-child { border-bottom: none; }
+    .chapter-item:hover { background: #f8fafc; }
+
+    /* Sidebar Badge */
+    .sem-badge-card {
+        background: linear-gradient(135deg, var(--color-secondary), #F59E0B);
+        color: white;
+        border-radius: 20px;
+        padding: 3rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }

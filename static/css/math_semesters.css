@@ -1,0 +1,80 @@
+    /* Reuse Header & Breadcrumb from courses_hub */
+    .page-header {
+        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+        padding: 5rem 0 3rem;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .header-pattern {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        opacity: 0.1;
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+    .breadcrumb-nav {
+        display: inline-flex;
+        background: white;
+        padding: 5px 5px;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-top: -25px;
+        position: relative;
+        z-index: 10;
+    }
+    .breadcrumb-item-custom {
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #64748b;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .breadcrumb-item-custom:hover { color: var(--color-primary); background: #f1f5f9; }
+    .breadcrumb-item-custom.active { background: var(--color-primary); color: white; }
+
+    /* --- Semester Cards --- */
+    .sem-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        padding: 2.5rem 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        border: 2px solid transparent;
+    }
+
+    .sem-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(30, 64, 175, 0.1);
+        border-color: var(--color-primary);
+    }
+
+    .sem-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--color-primary);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .sem-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #64748b;
+        font-weight: 600;
+    }
+
+    .card-disabled {
+        background: #f8fafc;
+        opacity: 0.6;
+        cursor: default;
+        box-shadow: none;
+    }
+    .card-disabled:hover { transform: none; border-color: transparent; }
+    .card-disabled .sem-title { color: #cbd5e1; }

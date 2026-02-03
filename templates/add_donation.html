@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}APEX | Donate Item{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header text-white p-4 text-center" style="background: linear-gradient(135deg, #7C3AED, #4C1D95);">
+                    <h3 class="fw-bold m-0"><i class="fas fa-heart me-2"></i> Donate an Item</h3>
+                </div>
+                <div class="card-body p-5">
+                    
+                    <form method="POST" action="{{ url_for('add_donation') }}" enctype="multipart/form-data">
+                        
+                        <div class="alert alert-info text-center rounded-3 mb-4">
+                            <i class="fas fa-info-circle me-1"></i> You are posting this item for <strong>FREE</strong> to help a student.
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Item Name</label>
+                            <input type="text" name="title" class="form-control form-control-lg bg-light" placeholder="e.g. Calculus Book, Lab Coat..." required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Category</label>
+                                <select name="category" class="form-select bg-light" required>
+                                    <option value="Books">Books & Notes</option>
+                                    <option value="Clothing">Clothing (Blouse, etc)</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Tools">Tools & Supplies</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Condition</label>
+                                <select name="condition" class="form-select bg-light" required>
+                                    <option value="New">New / Unused</option>
+                                    <option value="Good">Good (Used)</option>
+                                    <option value="Fair">Fair (Has wear)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">WhatsApp Number</label>
+                            <input type="text" name="contact_info" class="form-control bg-light" placeholder="+212 6..." required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea name="description" class="form-control bg-light" rows="3" placeholder="Briefly describe the item..."></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Upload Photo</label>
+                            <input type="file" name="donation_image" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow" style="background-color: #7C3AED; border:none;">
+                            List Item for Donation
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,55 +2,69 @@
 
 {% block title %}APEX | {{ article.title }}{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/article_deatais.css') }}">
+{% endblock %}
+
+
 {% block content %}
 
-<header class="position-relative w-100" style="height: 60vh;">
-    <div class="position-absolute top-0 start-0 w-100 h-100" 
-         style="background: url('{{ url_for('static', filename='images/' + article.image) }}') no-repeat center center/cover;">
-    </div>
+<header class="article-header w-100" style="background-image: url('{{ url_for('static', filename='uploads/images/' + article.image) }}');">
+    <div class="article-overlay"></div>
     
-    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9));"></div>
-
-    <div class="container h-100 d-flex flex-column justify-content-center position-relative z-2 text-center">
-        <div data-aos="zoom-in">
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill shadow-sm">{{ article.subject }}</span>
+    <div class="container h-100 d-flex flex-column justify-content-end pb-5 position-relative z-2">
+        <div class="col-lg-9 mx-auto text-center">
             
-            <h1 class="display-3 fw-bold mb-3" style="color: #ffffff !important; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">
+            <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill shadow-sm fw-bold">
+                {{ article.subject }}
+            </span>
+            
+            <h1 class="display-4 fw-bold mb-4 text-white text-shadow">
                 {{ article.title }}
             </h1>
             
-            <div class="d-flex justify-content-center align-items-center gap-4" style="color: #e2e8f0 !important; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                <span><i class="fas fa-user-edit me-2"></i>{{ article.author }}</span>
-                <span><i class="far fa-clock me-2"></i>{{ article.created_at.strftime('%B %d, %Y') }}</span>
+            <div class="d-flex justify-content-center align-items-center text-white gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fas fa-user-circle fa-lg"></i>
+                    <span class="fw-bold">{{ article.author }}</span>
+                </div>
+                <span class="opacity-50">|</span>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>{{ article.created_at.strftime('%B %d, %Y') }}</span>
+                </div>
             </div>
+
         </div>
     </div>
 </header>
 
-<section class="section-padding">
+<section class="section-padding bg-white">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-9">
+            <div class="col-lg-8">
+                
                 <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
-                    <span class="fw-bold text-muted">Share this knowledge:</span>
-                    <div>
-                        <a href="#" class="btn btn-outline-primary btn-sm rounded-circle me-1"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="btn btn-outline-info btn-sm rounded-circle me-1"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="btn btn-outline-success btn-sm rounded-circle"><i class="fab fa-whatsapp"></i></a>
+                    <span class="text-muted small fw-bold text-uppercase">Share this article</span>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary rounded-circle"><a href='https://web.facebook.com/profile.php?id=61582914692395' class="fab fa-facebook-f"></a></button>
+                        <button class="btn btn-sm btn-outline-info rounded-circle"><a href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' class="fab fa-instagram"></a></button>
                     </div>
                 </div>
 
-                <div class="article-content" style="font-size: 1.15rem; line-height: 1.9; color: var(--text-color);">
+                <div class="article-body">
                     {{ article.content | safe }}
                 </div>
 
-                <div class="mt-5 pt-5 border-top d-flex justify-content-between">
-                    <a href="{{ url_for('articles') }}" class="btn btn-outline-dark rounded-pill">
-                        <i class="fas fa-arrow-left me-2"></i> Back to Hub
+                <div class="mt-5 pt-5 border-top d-flex justify-content-center">
+                    <a href="{{ url_for('articles') }}" class="btn btn-outline-dark rounded-pill px-5">
+                        <i class="fas fa-th-large me-2"></i> Browse All Articles
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
 </section>
+
 {% endblock %}
