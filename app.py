@@ -447,6 +447,387 @@ def resolve_item(cursor, id):
         
     return redirect(url_for('lost_found'))
 
+# -------------------------------------------------
+# Housing System
+# -------------------------------------------------
+
+@app.route('/housing')
+@db_task
+def housing(cursor):
+    """Displays the Housing & Roommate Finder."""
+    # Fetch active listings, newest first
+    cursor.execute("""
+        SELECT h.*, u.first_name, u.last_name, u.profile_image 
+        FROM housing h 
+        JOIN users u ON h.user_id = u.id 
+        WHERE h.status = 'active' 
+        ORDER BY h.created_at DESC
+    """)
+    listings = cursor.fetchall()
+    return render_template('housing.html', listings=listings)
+
+@app.route('/add-housing', methods=['GET', 'POST'])
+@db_task
+def add_housing(cursor):
+    """Allows students to post a housing offer or request."""
+    if 'user_id' not in session:
+        flash("Please login to post a listing.", "warning")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        type_ = request.form.get('type') # 'offer' or 'request'
+        title = request.form.get('title')
+        location = request.form.get('location')
+        price = request.form.get('price')
+        gender_pref = request.form.get('gender_pref')
+        contact = request.form.get('contact_info')
+        description = request.form.get('description')
+        
+        filename = 'default_house.jpg'
+        if 'housing_image' in request.files:
+            file = request.files['housing_image']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.root_path, app.config['IMAGE_UPLOAD_FOLDER'], filename))
+
+        cursor.execute('''
+            INSERT INTO housing (user_id, type, title, location, price, gender_pref, contact_info, description, image)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ''', (session['user_id'], type_, title, location, price, gender_pref, contact, description, filename))
+
+        flash('Housing listing posted successfully!', 'success')
+        return redirect(url_for('housing'))
+
+    return render_template('add_housing.html')
+
+@app.route('/delete-housing/<int:id>')
+@db_task
+def delete_housing(cursor, id):
+    """Mark a listing as taken/deleted."""
+    if 'user_id' not in session: return redirect(url_for('login'))
+    
+    # Check ownership
+    cursor.execute("SELECT user_id FROM housing WHERE id = %s", (id,))
+    item = cursor.fetchone()
+    
+    if item and (item['user_id'] == session['user_id'] or session.get('email') in ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']):
+        cursor.execute("UPDATE housing SET status = 'taken' WHERE id = %s", (id,))
+        flash("Listing removed!", "success")
+    else:
+        flash("Unauthorized action.", "danger")
+        
+    return redirect(url_for('housing'))
+
+
+# -------------------------------------------------
+# Donation / Charity System
+# -------------------------------------------------
+
+@app.route('/donations')
+@db_task
+def donations(cursor):
+    """Displays the Donation Corner."""
+    # Fetch available items, newest first
+    cursor.execute("""
+        SELECT d.*, u.first_name, u.last_name, u.profile_image 
+        FROM donations d 
+        JOIN users u ON d.user_id = u.id 
+        WHERE d.status = 'available' 
+        ORDER BY d.created_at DESC
+    """)
+    items = cursor.fetchall()
+    return render_template('donations.html', items=items)
+
+@app.route('/add-donation', methods=['GET', 'POST'])
+@db_task
+def add_donation(cursor):
+    """Allows students to post items for free donation."""
+    if 'user_id' not in session:
+        flash("Please login to donate an item.", "warning")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        category = request.form.get('category')
+        condition = request.form.get('condition')
+        contact = request.form.get('contact_info')
+        description = request.form.get('description')
+        
+        filename = 'default_donation.jpg'
+        if 'donation_image' in request.files:
+            file = request.files['donation_image']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.root_path, app.config['IMAGE_UPLOAD_FOLDER'], filename))
+
+        cursor.execute('''
+            INSERT INTO donations (user_id, title, category, item_condition, contact_info, description, image)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        ''', (session['user_id'], title, category, condition, contact, description, filename))
+
+        flash('Thank you for your generosity! Item listed.', 'success')
+        return redirect(url_for('donations'))
+
+    return render_template('add_donation.html')
+
+@app.route('/claim-donation/<int:id>')
+@db_task
+def claim_donation(cursor, id):
+    """Mark a donation as taken (Archive it)."""
+    if 'user_id' not in session: return redirect(url_for('login'))
+    
+    # Check ownership
+    cursor.execute("SELECT user_id FROM donations WHERE id = %s", (id,))
+    item = cursor.fetchone()
+    
+    if item and (item['user_id'] == session['user_id'] or session.get('email') in ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']):
+        cursor.execute("UPDATE donations SET status = 'taken' WHERE id = %s", (id,))
+        flash("Item marked as gifted!", "success")
+    else:
+        flash("Unauthorized action.", "danger")
+        
+    return redirect(url_for('donations'))
+
+
+
+# -------------------------------------------------
+# Members System
+# -------------------------------------------------
+
+@app.route('/members')
+@db_task
+def members(cursor):
+    """Displays a list of all team members."""
+    query = "SELECT * FROM users WHERE team IS NOT NULL ORDER BY team, role"
+    cursor.execute(query)
+    all_members = cursor.fetchall()
+    return render_template('members.html', members=all_members)
+
+@app.route('/add_member', methods=['GET', 'POST'])
+@db_task
+def add_member(cursor):
+    """Admin-only route to add new team members."""
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    ALLOWED_ADMINS = ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']
+    if session.get('email') not in ALLOWED_ADMINS:
+        flash("Access Denied!", "danger")
+        return redirect(url_for('members'))
+
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        phone = request.form.get('phone_number')
+        role = request.form.get('role')
+        team = request.form.get('team')
+        password = generate_password_hash("12345678")
+        
+        filename = 'default_profile.jpg'
+        if 'profile_image' in request.files:
+            file = request.files['profile_image']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.root_path, app.config['PROFILE_UPLOAD_FOLDER'], filename))
+
+        cursor.execute('SELECT id FROM users WHERE email=%s', (email,))
+        if cursor.fetchone():
+             flash('Error! This email exists.', 'danger')
+        else:
+            cursor.execute('''
+                INSERT INTO users (first_name, last_name, email, phone_number, password, role, team, profile_image) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ''', (first_name, last_name, email, phone, password, role, team, filename))
+            flash(f'Member {first_name} added successfully!', 'success')
+        
+        return redirect(url_for('add_member'))
+
+    return render_template('add_member.html')
+
+
+
+
+# -------------------------------------------------
+# User Profile System
+# -------------------------------------------------
+
+@app.route('/profile')
+@db_task
+def profile(cursor):
+    """Displays the user's profile."""
+    if 'user_id' not in session:
+        flash('Please login to view your profile', 'warning')
+        return redirect(url_for('login'))
+    
+    cursor.execute("SELECT * FROM users WHERE id = %s", (session['user_id'],))
+    user_data = cursor.fetchone()
+    
+    if user_data:
+        return render_template('profile.html', user=user_data)
+    else:
+        session.clear()
+        return redirect(url_for('login'))
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@db_task
+def edit_profile(cursor):
+    """Allows users to edit their profile information."""
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        phone = request.form.get('phone_number')
+        bio = request.form.get('bio')
+        
+        # Retrieve branch from form
+        branch = request.form.get('branch')
+        
+        if 'profile_image' in request.files:
+            file = request.files['profile_image']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.root_path, app.config['PROFILE_UPLOAD_FOLDER'], filename))
+                cursor.execute("UPDATE users SET profile_image=%s WHERE id=%s", (filename, user_id))
+
+        # Update user details including branch
+        cursor.execute("""
+            UPDATE users 
+            SET first_name=%s, last_name=%s, phone_number=%s, bio=%s, branch=%s
+            WHERE id=%s
+        """, (first_name, last_name, phone, bio, branch, user_id))
+        
+        session['username'] = first_name
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))
+
+    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    user = cursor.fetchone()
+    return render_template('edit_profile.html', user=user)
+
+
+
+
+# -------------------------------------------------
+# Academic System
+# -------------------------------------------------
+
+MATH_PROGRAM = {
+    'S1': {
+        'Analysis 1': [
+            {'title': 'Chapter 1: Real Numbers',             'filename': 'analysis1_chap1.pdf'},
+            {'title': 'Chapter 2: Real Sequences',           'filename': 'analysis1_chap2.pdf'},
+            {'title': 'Chapter 3: Functions of a real variable', 'filename': 'analysis1_chap3.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'analysis1_td1.pdf'},
+            {'title': 'TD Series 2',                         'filename': 'analysis1_td2.pdf'},
+            {'title': 'TD Series 3',                         'filename': 'analysis1_td3.pdf'}
+        ],
+        'Algebra 1': [
+            {'title': 'Chapter 1: Logic & Sets',             'filename': 'algebra1_chap1.pdf'},
+            {'title': 'Chapter 2: Basic Language of Set Theory', 'filename': 'algebra1_chap2.pdf'},
+            {'title': 'Chapter 3: Mappings and Relations',   'filename': 'algebra1_chap3.pdf'},
+            {'title': 'Chapter 4: Mappings and Relations',   'filename': 'algebra1_chap4.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'algebra1_td1.pdf'},
+            {'title': 'TD Series 2',                         'filename': 'algebra1_td2.pdf'},
+            {'title': 'TD Series 3',                         'filename': 'algebra1_td3.pdf'}
+        ],
+        'Algebra 2': [
+            {'title': 'Chapter 1: Groups',                   'filename': 'algebra2_chap1.pdf'},
+            {'title': 'Chapter 2: Polynomials',              'filename': 'algebra2_chap2.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'algebra2_td1.pdf'},
+            {'title': 'TD Series 2',                         'filename': 'algebra2_td2.pdf'}
+        ],
+        'Statistics': [
+            {'title': 'Chapter 1: Chapitre 01',              'filename': 'stats_chap1.pdf'},
+            {'title': 'Chapter 2: Chapitre 02',              'filename': 'stats_chap2.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'stats_td1.pdf'},
+            {'title': 'TD Series 2',                         'filename': 'stats_td2.pdf'}
+        ],
+        'Thermodynamics': [
+            {'title': 'Chapter 1: Chapitre 1',               'filename': 'thermo_chap1.pdf'},
+            {'title': 'Chapter 2: Chapitre 2',               'filename': 'thermo_chap2.pdf'},
+            {'title': 'Chapter 3: chapitre 03',              'filename': 'thermo_chap3.pdf'},
+            {'title': 'Chapter 4: Chapite 4',                'filename': 'thermo_chap4.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'thermo_td1.pdf'},
+            {'title': 'TD Series 2',                         'filename': 'thermo_td2.pdf'},
+            {'title': 'TD Series 3',                         'filename': 'thermo_td3.pdf'},
+            {'title': 'TD Series 4',                         'filename': 'thermo_td4.pdf'}
+        ],
+        'Informatique': [
+            {'title': 'Chapter 1: Chapitre 1 and Chpater 02', 'filename': 'info_chap1.pdf'},
+            {'title': 'Chapter 3: chapitre 03',              'filename': 'info_chap3.pdf'},
+            {'title': 'Chapter 4: Chapite 4',                'filename': 'info_chap4.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'info_td1.pdf'}
+        ]
+    },
+    # Placeholders for future semesters (S2 - S6)
+    'S2': {
+        'Analysis 2': [
+             {'title': 'analysis 2 Full Course',             'filename': 'analysis2.pdf'},
+             {'title': 'TD Series 1',                         'filename': 'analysis2_td1.pdf'},
+             {'title': 'TD Series 2',                         'filename': 'analysis2_td2.pdf'},
+             {'title': 'TD Series 3',                         'filename': 'analysis2_td3.pdf'},
+            ],
+        'Analysis 3': [
+            {'title': 'analysis 3 Full Course',             'filename': 'analysis3.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'analysis3_td1.pdf'},
+        ] , 
+        'Algebra 3': [
+            {'title': 'Algebra 3 Full Course',             'filename': 'Algebra3.pdf'},
+            {'title': 'TD Series 1',                         'filename': 'algebra3_td1.pdf'},
+        ],
+        'Informatique 2': [
+            {'title': 'Informatique Full Course', 'filename': 'info2.pdf'},
+            {'title': 'TD Series 1', 'filename': 'info2_td1.pdf'}, 
+            {'title': 'TD Series 2', 'filename': 'info2_td2.pdf'}, 
+            {'title': 'TD Series 3', 'filename': 'info2_td3.pdf'}, 
+            {'title': 'TD Series 4', 'filename': 'info2_td4.pdf'}, 
+        ]
+    },
+    'S3': {
+        'Analysis 3': ['Series', 'Topology'],
+        'Probabilities': ['Random Variables', 'Distributions']
+    },
+    'S4': {
+        'Analysis 4': ['Complex Analysis'],
+        'Algebra 4': ['Reduction of Endomorphisms']
+    },
+    'S5': {
+        'Topology': ['Metric Spaces'],
+        'Integration': ['Measure Theory']
+    },
+    'S6': {
+        'Differential Calculus': ['Differentiability'],
+        'Graduation Project': ['PFE Guidelines']
+    }
+}
+
+# -------------------------------------------------
+# Academic Routes
+# -------------------------------------------------
+
+@app.route('/academic_hub')
+def courses_hub():
+    """Renders the main academic hub page."""
+    return render_template('courses_hub.html')
+
+@app.route('/courses/math')
+def math_semesters():
+    """Displays available math semesters."""
+    return render_template('math_semesters.html', semesters=MATH_PROGRAM.keys())
+
+@app.route('/courses/math/<semester>')
+def semester_content(semester):
+    """Displays content for a specific semester."""
+    modules = MATH_PROGRAM.get(semester, {})
+    return render_template('semester_content.html', semester=semester, modules=modules)
+
+
+
 
 # -------------------------------------------------
 # Focus & Productivity System
@@ -605,380 +986,6 @@ def save_session(cursor):
     return {'status': 'success', 'xp_gained': xp_gained}
 
 
-# -------------------------------------------------
-# User Profile System
-# -------------------------------------------------
-
-@app.route('/profile')
-@db_task
-def profile(cursor):
-    """Displays the user's profile."""
-    if 'user_id' not in session:
-        flash('Please login to view your profile', 'warning')
-        return redirect(url_for('login'))
-    
-    cursor.execute("SELECT * FROM users WHERE id = %s", (session['user_id'],))
-    user_data = cursor.fetchone()
-    
-    if user_data:
-        return render_template('profile.html', user=user_data)
-    else:
-        session.clear()
-        return redirect(url_for('login'))
-
-@app.route('/edit_profile', methods=['GET', 'POST'])
-@db_task
-def edit_profile(cursor):
-    """Allows users to edit their profile information."""
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    
-    user_id = session['user_id']
-
-    if request.method == 'POST':
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
-        phone = request.form.get('phone_number')
-        bio = request.form.get('bio')
-        
-        # Retrieve branch from form
-        branch = request.form.get('branch')
-        
-        if 'profile_image' in request.files:
-            file = request.files['profile_image']
-            if file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.root_path, app.config['PROFILE_UPLOAD_FOLDER'], filename))
-                cursor.execute("UPDATE users SET profile_image=%s WHERE id=%s", (filename, user_id))
-
-        # Update user details including branch
-        cursor.execute("""
-            UPDATE users 
-            SET first_name=%s, last_name=%s, phone_number=%s, bio=%s, branch=%s
-            WHERE id=%s
-        """, (first_name, last_name, phone, bio, branch, user_id))
-        
-        session['username'] = first_name
-        flash('Profile updated successfully!', 'success')
-        return redirect(url_for('profile'))
-
-    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
-    user = cursor.fetchone()
-    return render_template('edit_profile.html', user=user)
-
-# -------------------------------------------------
-# Members System
-# -------------------------------------------------
-
-@app.route('/members')
-@db_task
-def members(cursor):
-    """Displays a list of all team members."""
-    query = "SELECT * FROM users WHERE team IS NOT NULL ORDER BY team, role"
-    cursor.execute(query)
-    all_members = cursor.fetchall()
-    return render_template('members.html', members=all_members)
-
-@app.route('/add_member', methods=['GET', 'POST'])
-@db_task
-def add_member(cursor):
-    """Admin-only route to add new team members."""
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-
-    ALLOWED_ADMINS = ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']
-    if session.get('email') not in ALLOWED_ADMINS:
-        flash("Access Denied!", "danger")
-        return redirect(url_for('members'))
-
-    if request.method == 'POST':
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
-        email = request.form.get('email')
-        phone = request.form.get('phone_number')
-        role = request.form.get('role')
-        team = request.form.get('team')
-        password = generate_password_hash("12345678")
-        
-        filename = 'default_profile.jpg'
-        if 'profile_image' in request.files:
-            file = request.files['profile_image']
-            if file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.root_path, app.config['PROFILE_UPLOAD_FOLDER'], filename))
-
-        cursor.execute('SELECT id FROM users WHERE email=%s', (email,))
-        if cursor.fetchone():
-             flash('Error! This email exists.', 'danger')
-        else:
-            cursor.execute('''
-                INSERT INTO users (first_name, last_name, email, phone_number, password, role, team, profile_image) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            ''', (first_name, last_name, email, phone, password, role, team, filename))
-            flash(f'Member {first_name} added successfully!', 'success')
-        
-        return redirect(url_for('add_member'))
-
-    return render_template('add_member.html')
-
-
-# -------------------------------------------------
-# Academic System
-# -------------------------------------------------
-
-MATH_PROGRAM = {
-    'S1': {
-        'Analysis 1': [
-            {'title': 'Chapter 1: Real Numbers',             'filename': 'analysis1_chap1.pdf'},
-            {'title': 'Chapter 2: Real Sequences',           'filename': 'analysis1_chap2.pdf'},
-            {'title': 'Chapter 3: Functions of a real variable', 'filename': 'analysis1_chap3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'analysis1_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'analysis1_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'analysis1_td3.pdf'}
-        ],
-        'Algebra 1': [
-            {'title': 'Chapter 1: Logic & Sets',             'filename': 'algebra1_chap1.pdf'},
-            {'title': 'Chapter 2: Basic Language of Set Theory', 'filename': 'algebra1_chap2.pdf'},
-            {'title': 'Chapter 3: Mappings and Relations',   'filename': 'algebra1_chap3.pdf'},
-            {'title': 'Chapter 4: Mappings and Relations',   'filename': 'algebra1_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra1_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'algebra1_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'algebra1_td3.pdf'}
-        ],
-        'Algebra 2': [
-            {'title': 'Chapter 1: Groups',                   'filename': 'algebra2_chap1.pdf'},
-            {'title': 'Chapter 2: Polynomials',              'filename': 'algebra2_chap2.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra2_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'algebra2_td2.pdf'}
-        ],
-        'Statistics': [
-            {'title': 'Chapter 1: Chapitre 01',              'filename': 'stats_chap1.pdf'},
-            {'title': 'Chapter 2: Chapitre 02',              'filename': 'stats_chap2.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'stats_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'stats_td2.pdf'}
-        ],
-        'Thermodynamics': [
-            {'title': 'Chapter 1: Chapitre 1',               'filename': 'thermo_chap1.pdf'},
-            {'title': 'Chapter 2: Chapitre 2',               'filename': 'thermo_chap2.pdf'},
-            {'title': 'Chapter 3: chapitre 03',              'filename': 'thermo_chap3.pdf'},
-            {'title': 'Chapter 4: Chapite 4',                'filename': 'thermo_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'thermo_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'thermo_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'thermo_td3.pdf'},
-            {'title': 'TD Series 4',                         'filename': 'thermo_td4.pdf'}
-        ],
-        'Informatique': [
-            {'title': 'Chapter 1: Chapitre 1 and Chpater 02', 'filename': 'info_chap1.pdf'},
-            {'title': 'Chapter 3: chapitre 03',              'filename': 'info_chap3.pdf'},
-            {'title': 'Chapter 4: Chapite 4',                'filename': 'info_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'info_td1.pdf'}
-        ]
-    },
-    # Placeholders for future semesters (S2 - S6)
-    'S2': {
-        'Analysis 2': [
-             {'title': 'analysis 2 Full Course',             'filename': 'analysis2.pdf'},
-             {'title': 'TD Series 1',                         'filename': 'analysis2_td1.pdf'},
-             {'title': 'TD Series 2',                         'filename': 'analysis2_td2.pdf'},
-             {'title': 'TD Series 3',                         'filename': 'analysis2_td3.pdf'},
-            ],
-        'Analysis 3': [
-            {'title': 'analysis 3 Full Course',             'filename': 'analysis3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'analysis3_td1.pdf'},
-        ] , 
-        'Algebra 3': [
-            {'title': 'Algebra 3 Full Course',             'filename': 'Algebra3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra3_td1.pdf'},
-        ],
-        'Informatique 2': [
-            {'title': 'Informatique Full Course', 'filename': 'info2.pdf'},
-            {'title': 'TD Series 1', 'filename': 'info2_td1.pdf'}, 
-            {'title': 'TD Series 2', 'filename': 'info2_td2.pdf'}, 
-            {'title': 'TD Series 3', 'filename': 'info2_td3.pdf'}, 
-            {'title': 'TD Series 4', 'filename': 'info2_td4.pdf'}, 
-        ]
-    },
-    'S3': {
-        'Analysis 3': ['Series', 'Topology'],
-        'Probabilities': ['Random Variables', 'Distributions']
-    },
-    'S4': {
-        'Analysis 4': ['Complex Analysis'],
-        'Algebra 4': ['Reduction of Endomorphisms']
-    },
-    'S5': {
-        'Topology': ['Metric Spaces'],
-        'Integration': ['Measure Theory']
-    },
-    'S6': {
-        'Differential Calculus': ['Differentiability'],
-        'Graduation Project': ['PFE Guidelines']
-    }
-}
-
-# -------------------------------------------------
-# Academic Routes
-# -------------------------------------------------
-
-@app.route('/academic_hub')
-def courses_hub():
-    """Renders the main academic hub page."""
-    return render_template('courses_hub.html')
-
-@app.route('/courses/math')
-def math_semesters():
-    """Displays available math semesters."""
-    return render_template('math_semesters.html', semesters=MATH_PROGRAM.keys())
-
-@app.route('/courses/math/<semester>')
-def semester_content(semester):
-    """Displays content for a specific semester."""
-    modules = MATH_PROGRAM.get(semester, {})
-    return render_template('semester_content.html', semester=semester, modules=modules)
-
-
-
-
-# -------------------------------------------------
-# Housing System
-# -------------------------------------------------
-
-@app.route('/housing')
-@db_task
-def housing(cursor):
-    """Displays the Housing & Roommate Finder."""
-    # Fetch active listings, newest first
-    cursor.execute("""
-        SELECT h.*, u.first_name, u.last_name, u.profile_image 
-        FROM housing h 
-        JOIN users u ON h.user_id = u.id 
-        WHERE h.status = 'active' 
-        ORDER BY h.created_at DESC
-    """)
-    listings = cursor.fetchall()
-    return render_template('housing.html', listings=listings)
-
-@app.route('/add-housing', methods=['GET', 'POST'])
-@db_task
-def add_housing(cursor):
-    """Allows students to post a housing offer or request."""
-    if 'user_id' not in session:
-        flash("Please login to post a listing.", "warning")
-        return redirect(url_for('login'))
-
-    if request.method == 'POST':
-        type_ = request.form.get('type') # 'offer' or 'request'
-        title = request.form.get('title')
-        location = request.form.get('location')
-        price = request.form.get('price')
-        gender_pref = request.form.get('gender_pref')
-        contact = request.form.get('contact_info')
-        description = request.form.get('description')
-        
-        filename = 'default_house.jpg'
-        if 'housing_image' in request.files:
-            file = request.files['housing_image']
-            if file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.root_path, app.config['IMAGE_UPLOAD_FOLDER'], filename))
-
-        cursor.execute('''
-            INSERT INTO housing (user_id, type, title, location, price, gender_pref, contact_info, description, image)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ''', (session['user_id'], type_, title, location, price, gender_pref, contact, description, filename))
-
-        flash('Housing listing posted successfully!', 'success')
-        return redirect(url_for('housing'))
-
-    return render_template('add_housing.html')
-
-@app.route('/delete-housing/<int:id>')
-@db_task
-def delete_housing(cursor, id):
-    """Mark a listing as taken/deleted."""
-    if 'user_id' not in session: return redirect(url_for('login'))
-    
-    # Check ownership
-    cursor.execute("SELECT user_id FROM housing WHERE id = %s", (id,))
-    item = cursor.fetchone()
-    
-    if item and (item['user_id'] == session['user_id'] or session.get('email') in ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']):
-        cursor.execute("UPDATE housing SET status = 'taken' WHERE id = %s", (id,))
-        flash("Listing removed!", "success")
-    else:
-        flash("Unauthorized action.", "danger")
-        
-    return redirect(url_for('housing'))
-
-
-# -------------------------------------------------
-# Donation / Charity System
-# -------------------------------------------------
-
-@app.route('/donations')
-@db_task
-def donations(cursor):
-    """Displays the Donation Corner."""
-    # Fetch available items, newest first
-    cursor.execute("""
-        SELECT d.*, u.first_name, u.last_name, u.profile_image 
-        FROM donations d 
-        JOIN users u ON d.user_id = u.id 
-        WHERE d.status = 'available' 
-        ORDER BY d.created_at DESC
-    """)
-    items = cursor.fetchall()
-    return render_template('donations.html', items=items)
-
-@app.route('/add-donation', methods=['GET', 'POST'])
-@db_task
-def add_donation(cursor):
-    """Allows students to post items for free donation."""
-    if 'user_id' not in session:
-        flash("Please login to donate an item.", "warning")
-        return redirect(url_for('login'))
-
-    if request.method == 'POST':
-        title = request.form.get('title')
-        category = request.form.get('category')
-        condition = request.form.get('condition')
-        contact = request.form.get('contact_info')
-        description = request.form.get('description')
-        
-        filename = 'default_donation.jpg'
-        if 'donation_image' in request.files:
-            file = request.files['donation_image']
-            if file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.root_path, app.config['IMAGE_UPLOAD_FOLDER'], filename))
-
-        cursor.execute('''
-            INSERT INTO donations (user_id, title, category, item_condition, contact_info, description, image)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        ''', (session['user_id'], title, category, condition, contact, description, filename))
-
-        flash('Thank you for your generosity! Item listed.', 'success')
-        return redirect(url_for('donations'))
-
-    return render_template('add_donation.html')
-
-@app.route('/claim-donation/<int:id>')
-@db_task
-def claim_donation(cursor, id):
-    """Mark a donation as taken (Archive it)."""
-    if 'user_id' not in session: return redirect(url_for('login'))
-    
-    # Check ownership
-    cursor.execute("SELECT user_id FROM donations WHERE id = %s", (id,))
-    item = cursor.fetchone()
-    
-    if item and (item['user_id'] == session['user_id'] or session.get('email') in ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']):
-        cursor.execute("UPDATE donations SET status = 'taken' WHERE id = %s", (id,))
-        flash("Item marked as gifted!", "success")
-    else:
-        flash("Unauthorized action.", "danger")
-        
-    return redirect(url_for('donations'))
 
 if __name__ == '__main__':
     app.run(debug=True)
