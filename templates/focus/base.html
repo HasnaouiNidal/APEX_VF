@@ -89,9 +89,15 @@
 
         <div class="p-4 border-t border-slate-100">
             <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold border border-brand-200">
-                    {{ stats.first_name[0] | upper }}
-                </div>
+                {% if stats.profile_image %}
+                    <img src="{{ url_for('static', filename='uploads/profiles/' + stats.profile_image) }}" 
+                        class="w-10 h-10 rounded-full object-cover border border-slate-200 shadow-sm" 
+                        alt="{{ stats.first_name }}">
+                {% else %}
+                    <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold border border-brand-200">
+                        {{ stats.first_name[0] | upper }}
+                    </div>
+                {% endif %}
                 <div>
                     <p class="text-sm font-bold text-slate-900">{{ stats.first_name }}</p>
                     <div class="flex items-center gap-1">

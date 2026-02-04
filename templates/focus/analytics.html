@@ -51,12 +51,12 @@
 <script>
     const ctx = document.getElementById('subjectChart').getContext('2d');
     new Chart(ctx, {
-        type: 'doughnut',
+    type: 'doughnut',
         data: {
-            labels: JSON.parse('{{ chart_labels | safe }}'),
+            // Safe way to load data:
+            labels: {{ chart_labels | tojson }},
             datasets: [{
-                data: JSON.parse('{{ chart_data | safe }}'),
-                // APEX Brand Colors: Blue, Orange, Light Blue, Slate, etc.
+                data: {{ chart_data | tojson }},
                 backgroundColor: ['#1E40AF', '#F59E0B', '#3B82F6', '#64748B', '#10B981'],
                 borderWidth: 0,
                 hoverOffset: 4

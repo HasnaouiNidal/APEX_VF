@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}APEX | {{ semester }}{% endblock %}
 
-
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/semester_content.css') }}">
 {% endblock %}
@@ -35,46 +34,52 @@
             </div>
 
             <div class="col-lg-9">
-                {% for module_name, chapters in modules.items() %}
-                <div class="module-card">
-                    <div class="module-header">
-                        <div class="bg-white p-2 rounded-circle shadow-sm">
-                            <i class="fas fa-book text-primary"></i>
-                        </div>
-                        <h5 class="fw-bold text-dark m-0">{{ module_name }}</h5>
-                    </div>
+                {% if grouped_materials %}
                     
-                    <div>
-                        {% for chapter in chapters %}
-                        <div class="chapter-item d-flex align-items-center">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="far fa-file-pdf text-danger fa-lg"></i>
-                                <span class="fw-medium text-secondary">{{ chapter.title }}</span>
+                    {% for module_name, chapters in grouped_materials.items() %}
+                    <div class="module-card mb-4">
+                        
+                        <div class="module-header d-flex align-items-center bg-light p-3 rounded-top border-bottom">
+                            <div class="bg-white p-2 rounded-circle shadow-sm me-3">
+                                <i class="fas fa-book text-primary"></i>
                             </div>
-                            
-                            <div class="ms-auto d-flex gap-2">
-                                <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
-                                class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
-                                target="_blank">
-                                    <i class="fas fa-eye me-1"></i> Read
-                                </a>
-
-                                <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
-                                class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
-                                download>
-                                    <i class="fas fa-download me-1"></i> Download
-                                </a>
-                            </div>
+                            <h5 class="fw-bold text-dark m-0">{{ module_name }}</h5>
                         </div>
-                                                {% endfor %}
+                        
+                        <div class="bg-white p-3 rounded-bottom border shadow-sm">
+                            {% for chapter in chapters %}
+                            <div class="chapter-item d-flex align-items-center py-2 border-bottom">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="far fa-file-pdf text-danger fa-lg"></i>
+                                    <span class="fw-medium text-secondary">{{ chapter.title }}</span>
+                                </div>
+                                
+                                <div class="ms-auto d-flex gap-2">
+                                    <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
+                                    class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
+                                    target="_blank">
+                                        <i class="fas fa-eye me-1"></i> Read
+                                    </a>
+
+                                    <a href="{{ url_for('static', filename='pdfs/' ~ chapter.filename) }}" 
+                                    class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" 
+                                    download>
+                                        <i class="fas fa-download me-1"></i> Download
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
                     </div>
-                </div>
+                    {% endfor %}
+
                 {% else %}
-                <div class="text-center py-5">
-                    <div class="opacity-50 mb-3"><i class="fas fa-folder-open fa-4x text-muted"></i></div>
-                    <h4 class="text-muted">No content available yet.</h4>
-                </div>
-                {% endfor %}
+                    <div class="text-center py-5">
+                        <div class="opacity-50 mb-3"><i class="fas fa-folder-open fa-4x text-muted"></i></div>
+                        <h4 class="text-muted">No content available yet.</h4>
+                    </div>
+                {% endif %}
             </div>
             
         </div>

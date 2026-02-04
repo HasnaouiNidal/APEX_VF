@@ -28,19 +28,12 @@
             {% for sem in semesters %}
             <div class="col-6 col-md-4 col-lg-3">
                 
-                {% if sem == 'S1' or sem == 'S2' %}
-                    <a href="{{ url_for('semester_content', semester=sem) }}" class="text-decoration-none">
-                        <div class="sem-card">
-                            <div class="sem-title">{{ sem }}</div>
-                            <div class="sem-label">Semester</div>
-                        </div>
-                    </a>
-                {% else %}
-                    <div class="sem-card card-disabled">
+                <a href="{{ url_for('semester_content', semester=sem) }}" class="text-decoration-none">
+                    <div class="sem-card">
                         <div class="sem-title">{{ sem }}</div>
-                        <div class="sem-label">Coming Soon</div>
+                        <div class="sem-label">Semester</div>
                     </div>
-                {% endif %}
+                </a>
 
             </div>
             {% endfor %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Admin | Add Course Material{% endblock %}
+
+{% block content %}
+<div class="container section-padding">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                
+                <div class="card-header text-white text-center py-4 rounded-top-4" 
+                     style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
+                    <h3 class="m-0 fw-bold"><i class="fas fa-book-open me-2"></i>Upload Course Material</h3>
+                </div>
+                
+                <div class="card-body p-5">
+                    
+                    <form action="{{ url_for('add_course') }}" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Chapter/Document Title</label>
+                            <input type="text" name="title" class="form-control rounded-3" placeholder="Ex: Chapter 1: Limits & Continuity" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Semester</label>
+                                <select name="semester" class="form-select rounded-3" required>
+                                    <option value="" selected disabled>Choose...</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                    <option value="S4">S4</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Module Name</label>
+                                <input type="text" name="module_name" class="form-control rounded-3" placeholder="Ex: Analysis 1" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Upload PDF</label>
+                            <input type="file" name="pdf_file" class="form-control rounded-3" accept=".pdf" required>
+                            <small class="text-muted">File will be saved to static/pdfs/</small>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm">
+                                <i class="fas fa-cloud-upload-alt me-2"></i> Upload Material
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

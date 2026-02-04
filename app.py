@@ -1,5 +1,3 @@
-#head of brain : 
-    # check if it good !? 
 # Standard library imports
 import os
 import re
@@ -16,6 +14,7 @@ import MySQLdb.cursors
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from email_validator import validate_email, EmailNotValidError
+from collections import defaultdict
 
 # -------------------------------------------------
 # Application Initialization
@@ -710,106 +709,9 @@ def edit_profile(cursor):
     return render_template('edit_profile.html', user=user)
 
 
-
-
-# -------------------------------------------------
-# Academic System
-# -------------------------------------------------
-
-MATH_PROGRAM = {
-    'S1': {
-        'Analysis 1': [
-            {'title': 'Chapter 1: Real Numbers',             'filename': 'analysis1_chap1.pdf'},
-            {'title': 'Chapter 2: Real Sequences',           'filename': 'analysis1_chap2.pdf'},
-            {'title': 'Chapter 3: Functions of a real variable', 'filename': 'analysis1_chap3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'analysis1_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'analysis1_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'analysis1_td3.pdf'}
-        ],
-        'Algebra 1': [
-            {'title': 'Chapter 1: Logic & Sets',             'filename': 'algebra1_chap1.pdf'},
-            {'title': 'Chapter 2: Basic Language of Set Theory', 'filename': 'algebra1_chap2.pdf'},
-            {'title': 'Chapter 3: Mappings and Relations',   'filename': 'algebra1_chap3.pdf'},
-            {'title': 'Chapter 4: Mappings and Relations',   'filename': 'algebra1_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra1_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'algebra1_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'algebra1_td3.pdf'}
-        ],
-        'Algebra 2': [
-            {'title': 'Chapter 1: Groups',                   'filename': 'algebra2_chap1.pdf'},
-            {'title': 'Chapter 2: Polynomials',              'filename': 'algebra2_chap2.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra2_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'algebra2_td2.pdf'}
-        ],
-        'Statistics': [
-            {'title': 'Chapter 1: Chapitre 01',              'filename': 'stats_chap1.pdf'},
-            {'title': 'Chapter 2: Chapitre 02',              'filename': 'stats_chap2.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'stats_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'stats_td2.pdf'}
-        ],
-        'Thermodynamics': [
-            {'title': 'Chapter 1: Chapitre 1',               'filename': 'thermo_chap1.pdf'},
-            {'title': 'Chapter 2: Chapitre 2',               'filename': 'thermo_chap2.pdf'},
-            {'title': 'Chapter 3: chapitre 03',              'filename': 'thermo_chap3.pdf'},
-            {'title': 'Chapter 4: Chapite 4',                'filename': 'thermo_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'thermo_td1.pdf'},
-            {'title': 'TD Series 2',                         'filename': 'thermo_td2.pdf'},
-            {'title': 'TD Series 3',                         'filename': 'thermo_td3.pdf'},
-            {'title': 'TD Series 4',                         'filename': 'thermo_td4.pdf'}
-        ],
-        'Informatique': [
-            {'title': 'Chapter 1: Chapitre 1 and Chpater 02', 'filename': 'info_chap1.pdf'},
-            {'title': 'Chapter 3: chapitre 03',              'filename': 'info_chap3.pdf'},
-            {'title': 'Chapter 4: Chapite 4',                'filename': 'info_chap4.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'info_td1.pdf'}
-        ]
-    },
-    # Placeholders for future semesters (S2 - S6)
-    'S2': {
-        'Analysis 2': [
-             {'title': 'analysis 2 Full Course',             'filename': 'analysis2.pdf'},
-             {'title': 'TD Series 1',                         'filename': 'analysis2_td1.pdf'},
-             {'title': 'TD Series 2',                         'filename': 'analysis2_td2.pdf'},
-             {'title': 'TD Series 3',                         'filename': 'analysis2_td3.pdf'},
-            ],
-        'Analysis 3': [
-            {'title': 'analysis 3 Full Course',             'filename': 'analysis3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'analysis3_td1.pdf'},
-        ] , 
-        'Algebra 3': [
-            {'title': 'Algebra 3 Full Course',             'filename': 'Algebra3.pdf'},
-            {'title': 'TD Series 1',                         'filename': 'algebra3_td1.pdf'},
-        ],
-        'Informatique 2': [
-            {'title': 'Informatique Full Course', 'filename': 'info2.pdf'},
-            {'title': 'TD Series 1', 'filename': 'info2_td1.pdf'}, 
-            {'title': 'TD Series 2', 'filename': 'info2_td2.pdf'}, 
-            {'title': 'TD Series 3', 'filename': 'info2_td3.pdf'}, 
-            {'title': 'TD Series 4', 'filename': 'info2_td4.pdf'}, 
-        ]
-    },
-    'S3': {
-        'Analysis 3': ['Series', 'Topology'],
-        'Probabilities': ['Random Variables', 'Distributions']
-    },
-    'S4': {
-        'Analysis 4': ['Complex Analysis'],
-        'Algebra 4': ['Reduction of Endomorphisms']
-    },
-    'S5': {
-        'Topology': ['Metric Spaces'],
-        'Integration': ['Measure Theory']
-    },
-    'S6': {
-        'Differential Calculus': ['Differentiability'],
-        'Graduation Project': ['PFE Guidelines']
-    }
-}
-
 # -------------------------------------------------
 # Academic Routes
 # -------------------------------------------------
-
 @app.route('/academic_hub')
 def courses_hub():
     """Renders the main academic hub page."""
@@ -818,15 +720,73 @@ def courses_hub():
 @app.route('/courses/math')
 def math_semesters():
     """Displays available math semesters."""
-    return render_template('math_semesters.html', semesters=MATH_PROGRAM.keys())
+    # Since we deleted the dictionary, we just define the list here
+    semesters_list = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6']
+    return render_template('math_semesters.html', semesters=semesters_list)
 
 @app.route('/courses/math/<semester>')
 def semester_content(semester):
-    """Displays content for a specific semester."""
-    modules = MATH_PROGRAM.get(semester, {})
-    return render_template('semester_content.html', semester=semester, modules=modules)
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # 1. Fetch all files for this semester from DB
+    cursor.execute("SELECT * FROM course_materials WHERE semester = %s ORDER BY module_name ASC, uploaded_at DESC", (semester,))
+    all_files = cursor.fetchall()
+    cursor.close()
 
+    # 2. Group them by Module
+    from collections import defaultdict
+    grouped_materials = defaultdict(list)
+    for file in all_files:
+        module = file['module_name']
+        grouped_materials[module].append(file)
 
+    # 3. Send the GROUPED data to the template
+    return render_template('semester_content.html', semester=semester, grouped_materials=grouped_materials)
+
+# -------------------------------------------------
+# ADMIN: ADD COURSE MATERIAL (SECURE)
+# -------------------------------------------------
+@app.route('/admin/add_course', methods=['GET', 'POST'])
+def add_course():
+    # 1. DEFINE ADMINS
+    ALLOWED_ADMINS = ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com']
+
+    # 2. SECURITY CHECK
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    if session.get('email') not in ALLOWED_ADMINS:
+        flash("Access Denied! Admins only.", "danger")
+        return redirect(url_for('courses_hub'))
+
+    # 3. UPLOAD LOGIC
+    if request.method == 'POST':
+        title = request.form['title']
+        semester = request.form['semester']
+        module_name = request.form['module_name']
+        file = request.files['pdf_file']
+
+        if file and file.filename != '':
+            filename = secure_filename(file.filename)
+            import time
+            unique_filename = f"{int(time.time())}_{filename}"
+            
+            # Save file
+            file.save(os.path.join(app.root_path, 'static/pdfs', unique_filename))
+
+            # Save to DB
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                "INSERT INTO course_materials (title, semester, module_name, filename) VALUES (%s, %s, %s, %s)",
+                (title, semester, module_name, unique_filename)
+            )
+            mysql.connection.commit()
+            cursor.close()
+
+            flash('Course material uploaded successfully!', 'success')
+            return redirect(url_for('add_course'))
+
+    return render_template('add_course.html')
 
 
 # -------------------------------------------------
@@ -844,7 +804,7 @@ def focus_dashboard(cursor):
     user_id = session['user_id']
     
     # Retrieve user statistics
-    cursor.execute("SELECT xp, level, first_name, last_name FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT xp, level, first_name, last_name, profile_image FROM users WHERE id = %s", (user_id,))
     user_stats = cursor.fetchone()
 
     # Validate user existence
@@ -873,7 +833,7 @@ def focus_tasks(cursor):
     if 'user_id' not in session: return redirect(url_for('login'))
     user_id = session['user_id']
     
-    cursor.execute("SELECT xp, level, first_name FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT xp, level, first_name, profile_image FROM users WHERE id = %s", (user_id,))
     user_stats = cursor.fetchone()
 
     # Fetch tasks by status
@@ -898,7 +858,7 @@ def focus_analytics(cursor):
     if 'user_id' not in session: return redirect(url_for('login'))
     user_id = session['user_id']
     
-    cursor.execute("SELECT xp, level, first_name FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT xp, level, first_name, profile_image FROM users WHERE id = %s", (user_id,))
     user_stats = cursor.fetchone()
 
     # Calculate total study hours
@@ -916,8 +876,8 @@ def focus_analytics(cursor):
     return render_template('focus/analytics.html', 
                            stats=user_stats, 
                            total_hours=total_hours,
-                           chart_labels=json.dumps(chart_labels), 
-                           chart_data=json.dumps(chart_data))
+                           chart_labels=chart_labels, 
+                           chart_data=chart_data)
 
 @app.route('/focus/leaderboard')
 @db_task
@@ -927,7 +887,7 @@ def focus_leaderboard(cursor):
     """
     if 'user_id' not in session: return redirect(url_for('login'))
     
-    cursor.execute("SELECT xp, level, first_name FROM users WHERE id = %s", (session['user_id'],))
+    cursor.execute("SELECT xp, level, first_name, profile_image FROM users WHERE id = %s", (session['user_id'],))
     user_stats = cursor.fetchone()
 
     # Fetch top 10 users
@@ -966,26 +926,64 @@ def start_task(cursor, task_id):
 @app.route('/focus/complete_task/<int:task_id>')
 @db_task
 def complete_task(cursor, task_id):
-    """API endpoint to mark a task as 'completed' and award XP."""
     if 'user_id' not in session: return redirect(url_for('login'))
+    
+    # 1. Update task status
     cursor.execute("UPDATE tasks SET status = 'completed' WHERE id = %s AND user_id = %s", (task_id, session['user_id']))
+    
+    # 2. Add XP (50 XP for a task)
     cursor.execute("UPDATE users SET xp = xp + 50 WHERE id = %s", (session['user_id'],))
+    
+    # 3. LEVEL UP CHECK
+    # We check the new total XP
+    cursor.execute("SELECT xp FROM users WHERE id = %s", (session['user_id'],))
+    current_xp = cursor.fetchone()['xp']
+    
+    # Logic: Level 1 starts at 0 XP. Level 2 at 1000 XP, Level 3 at 2000 XP...
+    # Formula: (XP // 1000) + 1
+    new_level = (current_xp // 1000) + 1
+    
+    cursor.execute("UPDATE users SET level = %s WHERE id = %s", (new_level, session['user_id']))
+    
     return redirect(url_for('focus_tasks'))
-
 @app.route('/focus/save_session', methods=['POST'])
 @db_task
 def save_session(cursor):
-    """API endpoint to save a completed study session and award XP."""
-    if 'user_id' not in session: return {'status': 'error'}, 401
+    if 'user_id' not in session: return jsonify({'status': 'error'}), 401
+    
     data = request.json
     duration = data.get('duration')
     mode = data.get('mode')
+    
+    # 1. Save Session
     cursor.execute("INSERT INTO study_sessions (user_id, duration, mode) VALUES (%s, %s, %s)", (session['user_id'], duration, mode))
+    
+    # 2. Add XP (10 XP per minute)
     xp_gained = duration * 10
     cursor.execute("UPDATE users SET xp = xp + %s WHERE id = %s", (xp_gained, session['user_id']))
-    return {'status': 'success', 'xp_gained': xp_gained}
+    
+    # 3. LEVEL UP CHECK
+    cursor.execute("SELECT xp FROM users WHERE id = %s", (session['user_id'],))
+    current_xp = cursor.fetchone()['xp']
+    new_level = (current_xp // 1000) + 1
+    cursor.execute("UPDATE users SET level = %s WHERE id = %s", (new_level, session['user_id']))
+    
+    return jsonify({'status': 'success', 'xp_gained': xp_gained, 'new_level': new_level})
 
 
+# -------------------------------------------------
+# DELETE TASK 
+# -------------------------------------------------
+
+@app.route('/focus/delete_task/<int:task_id>')
+@db_task
+def delete_task(cursor, task_id):
+    if 'user_id' not in session: return redirect(url_for('login'))
+    
+    # Only delete if it belongs to the logged-in user!
+    cursor.execute("DELETE FROM tasks WHERE id = %s AND user_id = %s", (task_id, session['user_id']))
+    
+    return redirect(url_for('focus_tasks'))
 
 if __name__ == '__main__':
     app.run(debug=True)
