@@ -1,52 +1,60 @@
  /* Reuse Header */
-    .page-header {
-        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
-        padding: 5rem 0 3rem;
-        color: white;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+ .page-header {
+     background: linear-gradient(135deg, var(--accent-blue) 0%, var(--bg-primary) 100%);
+     padding: 5rem 0 3rem;
+     color: var(--text-primary);
+     text-align: center;
+     margin-bottom: 2rem;
+ }
 
-    /* Card Style */
-    .donation-card {
-        border: none;
-        border-radius: 16px;
-        transition: all 0.3s ease;
-        background: #fff;
-        overflow: hidden;
-    }
-    
-    .donation-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(124, 58, 237, 0.15);
-    }
+ /* Card Style */
+ .donation-card {
+     border: 1px solid var(--border-color);
+     border-radius: 16px;
+     transition: all 0.3s ease;
+     background: var(--surface);
+     overflow: hidden;
+     box-shadow: var(--shadow-soft);
+ }
 
-    .donation-img {
-        height: 220px;
-        object-fit: cover;
-        width: 100%;
-    }
+ .donation-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 15px 30px rgba(124, 58, 237, 0.15);
+     border-color: var(--border-strong);
+ }
 
-    /* Condition Badge */
-    .condition-badge {
-        position: absolute;
-        top: 15px; right: 15px;
-        background: rgba(255, 255, 255, 0.95);
-        color: #7C3AED;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.8rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+ .donation-img {
+     height: 220px;
+     object-fit: cover;
+     width: 100%;
+ }
 
-    .free-tag {
-        position: absolute;
-        bottom: 15px; left: 15px;
-        background: #10B981; /* Green */
-        color: white;
-        padding: 5px 15px;
-        border-radius: 8px;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
+ /* Condition Badge */
+ .condition-badge {
+     position: absolute;
+     top: 15px;
+     right: 15px;
+     background: var(--surface-muted);
+     color: var(--text-primary);
+     border: 1px solid var(--border-color);
+     backdrop-filter: blur(8px);
+     -webkit-backdrop-filter: blur(8px);
+     padding: 5px 15px;
+     border-radius: 30px;
+     font-weight: 700;
+     font-size: 0.8rem;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
+
+ .free-tag {
+     position: absolute;
+     bottom: 15px;
+     left: 15px;
+     background: #10B981;
+     /* Green */
+     color: white;
+     padding: 5px 15px;
+     border-radius: 8px;
+     font-weight: bold;
+     letter-spacing: 1px;
+ }
