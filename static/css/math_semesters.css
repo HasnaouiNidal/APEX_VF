@@ -7,23 +7,29 @@
         position: relative;
         overflow: hidden;
     }
+
     .header-pattern {
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         opacity: 0.1;
         background-image: radial-gradient(#ffffff 1px, transparent 1px);
         background-size: 30px 30px;
     }
+
     .breadcrumb-nav {
         display: inline-flex;
         background: white;
         padding: 5px 5px;
         border-radius: 50px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         margin-top: -25px;
         position: relative;
         z-index: 10;
     }
+
     .breadcrumb-item-custom {
         padding: 8px 20px;
         border-radius: 40px;
@@ -33,8 +39,16 @@
         text-decoration: none;
         transition: all 0.3s ease;
     }
-    .breadcrumb-item-custom:hover { color: var(--color-primary); background: #f1f5f9; }
-    .breadcrumb-item-custom.active { background: var(--color-primary); color: white; }
+
+    .breadcrumb-item-custom:hover {
+        color: var(--color-primary);
+        background: #f1f5f9;
+    }
+
+    .breadcrumb-item-custom.active {
+        background: var(--color-primary);
+        color: white;
+    }
 
     /* --- Semester Cards --- */
     .sem-card {
@@ -44,7 +58,7 @@
         padding: 2.5rem 1rem;
         text-align: center;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         border: 2px solid transparent;
     }
 
@@ -76,5 +90,97 @@
         cursor: default;
         box-shadow: none;
     }
-    .card-disabled:hover { transform: none; border-color: transparent; }
-    .card-disabled .sem-title { color: #cbd5e1; }
+
+    .card-disabled:hover {
+        transform: none;
+        border-color: transparent;
+    }
+
+    .card-disabled .sem-title {
+        color: #cbd5e1;
+    }
+
+    /* ==========================================================================
+   LIGHT MODE REPAIRS
+   ========================================================================== */
+
+    [data-theme="light"] {
+        --bg-primary: #F8FAFC;
+        --bg-secondary: #EEF4FF;
+        --surface: #FFFFFF;
+        --surface-muted: #F1F5F9;
+        --text-primary: #0F172A;
+        --text-secondary: #475569;
+        --border-color: rgba(15, 23, 42, 0.10);
+        --border-strong: rgba(15, 23, 42, 0.16);
+        --accent-blue: #2563EB;
+        --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+        --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
+        --hero-title: #0F172A;
+        --hero-subtitle: #475569;
+        --pill-bg: #FFFFFF;
+        --pill-hover: #EAF1FF;
+        --card-hover-border: rgba(37, 99, 235, 0.18);
+    }
+
+    [data-theme="light"] body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    /* Header Overrides */
+    [data-theme="light"] .page-header {
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    [data-theme="light"] .header-title {
+        color: var(--hero-title) !important;
+    }
+
+    [data-theme="light"] .header-subtitle {
+        color: var(--hero-subtitle) !important;
+        opacity: 1 !important;
+    }
+
+    /* Breadcrumb Overrides */
+    [data-theme="light"] .breadcrumb-nav {
+        background: var(--pill-bg);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-soft);
+    }
+
+    [data-theme="light"] .breadcrumb-item-custom {
+        color: var(--text-secondary);
+    }
+
+    [data-theme="light"] .breadcrumb-item-custom:hover {
+        background: var(--pill-hover);
+        color: var(--accent-blue);
+    }
+
+    [data-theme="light"] .breadcrumb-item-custom.active {
+        background: var(--accent-blue);
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Card Overrides */
+    [data-theme="light"] .sem-card {
+        background: var(--surface);
+        border: 1px solid var(--border-strong);
+        box-shadow: var(--shadow-soft);
+    }
+
+    [data-theme="light"] .sem-card:hover {
+        border-color: var(--card-hover-border);
+        box-shadow: var(--shadow-lg);
+    }
+
+    [data-theme="light"] .sem-title {
+        color: var(--accent-blue) !important;
+    }
+
+    [data-theme="light"] .sem-label {
+        color: var(--text-secondary) !important;
+    }

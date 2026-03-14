@@ -2,7 +2,7 @@
 {% block title %}APEX | Math Semesters{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/math_semesters.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/math_semesters.css') }}">
 {% endblock %}
 
 
@@ -10,8 +10,8 @@
 <header class="page-header">
     <div class="header-pattern"></div>
     <div class="container position-relative z-2">
-        <h1 class="display-5 fw-bold mb-2" style="color:whitesmoke">Mathematics</h1>
-        <p class="opacity-75">Choose your semester to view modules.</p>
+        <h1 class="display-5 fw-bold mb-2 header-title">Mathematics</h1>
+        <p class="header-subtitle">Choose your semester to view modules.</p>
     </div>
 </header>
 
@@ -27,7 +27,7 @@
         <div class="row justify-content-center g-4">
             {% for sem in semesters %}
             <div class="col-6 col-md-4 col-lg-3">
-                
+
                 <a href="{{ url_for('semester_content', semester=sem) }}" class="text-decoration-none">
                     <div class="sem-card">
                         <div class="sem-title">{{ sem }}</div>

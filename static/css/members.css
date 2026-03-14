@@ -1,102 +1,322 @@
- /* --- PAGE HEADER (Consistent with Events/Articles) --- */
-    .page-header {
-        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
-        padding: 6rem 0 4rem;
-        position: relative;
-        overflow: hidden;
-        color: white;
-        text-align: center;
-    }
+/* ==========================================================================
+   THEME VARIABLES
+   ========================================================================== */
 
-    .header-pattern {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        opacity: 0.1;
-        background-image: radial-gradient(#ffffff 1px, transparent 1px);
-        background-size: 30px 30px;
-    }
+:root {
+    /* Fallback values mapped to Dark Theme per requirements */
+    --bg-primary: #070B14;
+    --bg-secondary: #0B1220;
+    --surface: #0F172A;
+    --surface-muted: #111827;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-blue: #4DA2FF;
+    --accent-cyan: #6EE7FF;
+    --accent-purple: #7C5CFF;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.28);
 
-    /* --- TEAM SECTIONS --- */
-    .team-section-title {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 2rem;
-        color: var(--color-primary);
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 1.5rem;
-    }
-    
-    .team-section-title::after {
-        content: '';
-        display: block;
-        width: 60px;
-        height: 4px;
-        background: var(--color-secondary); /* Orange underline */
-        margin: 8px auto 0;
-        border-radius: 10px;
-    }
+    --badge-board: linear-gradient(135deg, #FACC15, #F59E0B);
+    --badge-media: linear-gradient(135deg, #FB7185, #E11D48);
+    --badge-comm: linear-gradient(135deg, #38BDF8, #2563EB);
+    --badge-content: linear-gradient(135deg, #34D399, #059669);
+    --badge-org: linear-gradient(135deg, #F472B6, #DB2777);
+    --badge-it: linear-gradient(135deg, #8B5CF6, #5B21B6);
+}
 
-    /* --- MEMBER CARDS --- */
-    .member-card {
-        background: #fff;
-        border: none;
-        border-radius: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        overflow: hidden;
-        height: 100%;
-        text-align: center;
-        padding: 2rem 1.5rem;
-    }
+[data-theme="dark"] {
+    --bg-primary: #070B14;
+    --bg-secondary: #0B1220;
+    --surface: #0F172A;
+    --surface-muted: #111827;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-blue: #4DA2FF;
+    --accent-cyan: #6EE7FF;
+    --accent-purple: #7C5CFF;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.28);
 
-    .member-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
-    }
+    --badge-board: linear-gradient(135deg, #FACC15, #F59E0B);
+    --badge-media: linear-gradient(135deg, #FB7185, #E11D48);
+    --badge-comm: linear-gradient(135deg, #38BDF8, #2563EB);
+    --badge-content: linear-gradient(135deg, #34D399, #059669);
+    --badge-org: linear-gradient(135deg, #F472B6, #DB2777);
+    --badge-it: linear-gradient(135deg, #8B5CF6, #5B21B6);
+}
 
-    /* Profile Image Container */
-    .img-wrapper {
-        width: 140px;
-        height: 140px;
-        margin: 0 auto 1.5rem;
-        position: relative;
-    }
+[data-theme="light"] {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #EEF4FF;
+    --surface: #FFFFFF;
+    --surface-muted: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --accent-blue: #2563EB;
+    --accent-cyan: #06B6D4;
+    --accent-purple: #7C3AED;
+    --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
 
-    .member-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid white;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-    }
+    --badge-board: linear-gradient(135deg, #FDE68A, #F59E0B);
+    --badge-media: linear-gradient(135deg, #FDA4AF, #E11D48);
+    --badge-comm: linear-gradient(135deg, #7DD3FC, #2563EB);
+    --badge-content: linear-gradient(135deg, #6EE7B7, #059669);
+    --badge-org: linear-gradient(135deg, #F9A8D4, #DB2777);
+    --badge-it: linear-gradient(135deg, #C4B5FD, #7C3AED);
+}
 
-    .member-card:hover .member-img {
-        transform: scale(1.05);
-        border-color: var(--color-secondary); /* Orange border on hover */
-    }
+/* ==========================================================================
+   GLOBAL TRANSITIONS & BACKGROUNDS
+   ========================================================================== */
 
-    /* Team Badges (Pills) */
-    .team-badge {
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 6px 16px;
-        border-radius: 50px;
-        color: white;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        display: inline-block;
-        margin-top: 1rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.theme-transition {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
 
-    /* Custom Colors for Teams */
-    .badge-board { background: linear-gradient(45deg, #FFD54F, #F59E0B); color: #000; }
-    .badge-media { background: linear-gradient(45deg, #FF6B6B, #EE5253); }
-    .badge-comm { background: linear-gradient(45deg, #54a0ff, #2e86de); }
-    .badge-content { background: linear-gradient(45deg, #1dd1a1, #10ac84); }
-    .badge-org { background: linear-gradient(45deg, #ff9f43, #f368e0); }
-    .badge-it { background: linear-gradient(45deg, #5f27cd, #341f97); }
+.theme-bg-primary {
+    background-color: var(--bg-primary);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.page-header {
+    background: var(--bg-secondary);
+    padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image:
+        linear-gradient(to right, var(--text-secondary) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--text-secondary) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), transparent);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), transparent);
+}
+
+.header-glow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-blue) 0%, transparent 60%);
+    opacity: 0.15;
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+.header-title {
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+}
+
+.header-subtitle {
+    color: var(--text-secondary);
+}
+
+.premium-badge {
+    background: var(--surface);
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   SECTION TITLES & DIVIDERS
+   ========================================================================== */
+
+.team-section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.25rem;
+}
+
+.team-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--accent-blue);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.team-section-title:hover::after {
+    width: 60px;
+}
+
+.board-title {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+}
+
+.board-title::after {
+    background: var(--badge-board);
+}
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   MEMBER CARDS & PROFILES
+   ========================================================================== */
+
+.member-card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-blue);
+}
+
+.board-card {
+    background: linear-gradient(to bottom, var(--surface), var(--surface-muted));
+}
+
+.board-card:hover {
+    border-color: #FACC15;
+}
+
+/* Profile Image */
+.img-wrapper {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    border-radius: 50%;
+    padding: 4px;
+    /* Space for glowing ring */
+    background: linear-gradient(135deg, var(--border-color), transparent);
+    transition: background 0.4s ease;
+}
+
+.member-card:hover .img-wrapper {
+    background: var(--accent-blue);
+}
+
+.board-card:hover .img-wrapper {
+    background: var(--badge-board);
+}
+
+.member-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--surface);
+    transition: transform 0.4s ease;
+}
+
+.member-card:hover .member-img {
+    transform: scale(1.05);
+}
+
+/* Typography */
+.member-name {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+}
+
+.member-role {
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: auto;
+    /* Pushes badge to bottom if card height flexes */
+}
+
+/* ==========================================================================
+   TEAM BADGES
+   ========================================================================== */
+
+.team-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1.5rem;
+    display: inline-block;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-board {
+    background: var(--badge-board);
+    color: #000;
+    font-weight: 800;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.badge-media {
+    background: var(--badge-media);
+}
+
+.badge-comm {
+    background: var(--badge-comm);
+}
+
+.badge-content {
+    background: var(--badge-content);
+}
+
+.badge-org {
+    background: var(--badge-org);
+}
+
+.badge-it {
+    background: var(--badge-it);
+}

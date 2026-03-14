@@ -3,7 +3,7 @@
 {% block title %}APEX | Knowledge Hub{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/articles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/articles.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -11,56 +11,61 @@
 <header class="page-header">
     <div class="header-pattern"></div>
     <div class="container position-relative z-2">
-        <span class="badge bg-info text-dark rounded-pill px-3 py-2 mb-3 shadow fw-bold">
+        <span class="badge rounded-pill px-3 py-2 mb-3 shadow fw-bold"
+            style="background: var(--surface-muted); color: var(--accent-cyan); border: 1px solid var(--border-color);">
             <i class="fas fa-book-open me-1"></i> Knowledge Base
         </span>
-        
-        <h1 class="display-4 fw-bold mb-3 text-white">The Knowledge Hub</h1>
-        <p class="lead opacity-75 mx-auto text-light" style="max-width: 600px;">
+
+        <h1 class="display-4 fw-bold mb-3 font-sora">The Knowledge Hub</h1>
+        <p class="lead opacity-75 mx-auto" style="max-width: 600px;">
             Share your passion. Articles written by students, for students.
         </p>
     </div>
 </header>
 
-<section class="section-padding pt-0 bg-light" style="min-height: 80vh;">
+<section class="section-padding pt-0" style="min-height: 80vh; background-color: var(--bg-primary);">
     <div class="container">
-        
+
         <div class="row justify-content-center mb-5 filter-container" data-aos="fade-up">
             <div class="col-auto">
                 <div class="filter-box">
                     <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="Sciences">Sciences</button> <button class="filter-btn" data-filter="Languages">Languages</button> <button class="filter-btn" data-filter="other">Other</button> </div>
+                    <button class="filter-btn" data-filter="Sciences">Sciences</button> <button class="filter-btn"
+                        data-filter="Languages">Languages</button> <button class="filter-btn"
+                        data-filter="other">Other</button>
+                </div>
             </div>
         </div>
 
         <div class="row g-4" id="articles-container">
             {% for article in articles %}
             <div class="col-lg-4 col-md-6 article-item" data-subject="{{ article.subject }}" data-aos="fade-up">
-                
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="position-relative overflow-hidden" style="height: 200px;">
-                        <img src="{{ url_for('static', filename='/uploads/images/' + article.image)}}" 
-                             class="w-100 h-100 object-fit-cover transition-img" 
-                             alt="{{ article.title }}">
-                        
-                        <span class="badge bg-white text-primary position-absolute top-0 start-0 m-3 shadow-sm">
+
+                <div class="article-card hover-card">
+                    <div class="article-img-wrapper">
+                        <img src="{{ url_for('static', filename='/uploads/images/' + article.image)}}"
+                            alt="{{ article.title }}">
+
+                        <span class="subject-badge">
                             {{ article.subject }}
                         </span>
                     </div>
 
                     <div class="card-body p-4 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2 small text-muted">
+                        <div class="meta-info">
                             <span><i class="fas fa-user-edit me-1"></i> {{ article.author }}</span>
                             <span><i class="far fa-clock me-1"></i> {{ article.created_at.strftime('%b %d') }}</span>
                         </div>
-                        
-                        <h5 class="card-title fw-bold mb-3 text-dark">{{ article.title }}</h5>
-                        
-                        <p class="card-text text-muted small flex-grow-1">
+
+                        <h5 class="card-title fw-bold mb-3 font-sora" style="color: var(--text-primary);">{{
+                            article.title }}</h5>
+
+                        <p class="card-text small flex-grow-1" style="color: var(--text-secondary);">
                             {{ article.summary | truncate(100) }}
                         </p>
-                        
-                        <a href="{{ url_for('article_detail_dynamic', id=article.id) }}" class="fw-bold text-decoration-none mt-3 text-primary">
+
+                        <a href="{{ url_for('article_detail_dynamic', id=article.id) }}"
+                            class="fw-bold text-decoration-none mt-3" style="color: var(--accent-blue);">
                             Read Article <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -70,22 +75,22 @@
             {% else %}
             <div class="col-12 text-center py-5">
                 <div class="py-5">
-                    <i class="fas fa-pencil-alt fa-3x text-muted opacity-25 mb-3"></i>
-                    <h3 class="fw-bold text-secondary">No Articles Yet</h3>
-                    <p class="text-muted">Be the first to share your knowledge!</p>
+                    <i class="fas fa-pencil-alt fa-3x opacity-25 mb-3" style="color: var(--text-secondary);"></i>
+                    <h3 class="fw-bold font-sora" style="color: var(--text-primary);">No Articles Yet</h3>
+                    <p style="color: var(--text-secondary);">Be the first to share your knowledge!</p>
                 </div>
             </div>
             {% endfor %}
         </div>
-        
+
         <div id="no-results-msg" class="text-center py-5 d-none">
-            <h4 class="text-muted">No articles found in this category.</h4>
+            <h4 style="color: var(--text-secondary);">No articles found in this category.</h4>
         </div>
 
     </div>
 </section>
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/articles.js') }}"></script>
+<script src="{{ url_for('static', filename='js/articles.js') }}"></script>
 {% endblock %}
 {% endblock %}

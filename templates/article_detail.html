@@ -3,33 +3,35 @@
 {% block title %}APEX | {{ article.title }}{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/article_deatais.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/article_deatais.css') }}">
 {% endblock %}
 
 
 {% block content %}
 
-<header class="article-header w-100" style="background-image: url('{{ url_for('static', filename='uploads/images/' + article.image) }}');">
+<header class="article-header w-100"
+    style="background-image: url('{{ url_for('static', filename='uploads/images/' + article.image) }}');">
     <div class="article-overlay"></div>
-    
+
     <div class="container h-100 d-flex flex-column justify-content-end pb-5 position-relative z-2">
         <div class="col-lg-9 mx-auto text-center">
-            
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill shadow-sm fw-bold">
+
+            <span class="badge mb-3 px-3 py-2 rounded-pill shadow-sm fw-bold"
+                style="background: var(--surface-muted); color: var(--accent-cyan); border: 1px solid var(--border-color);">
                 {{ article.subject }}
             </span>
-            
-            <h1 class="display-4 fw-bold mb-4 text-white text-shadow">
+
+            <h1 class="display-4 fw-bold mb-4 font-sora text-shadow" style="color: var(--text-primary);">
                 {{ article.title }}
             </h1>
-            
-            <div class="d-flex justify-content-center align-items-center text-white gap-3">
+
+            <div class="d-flex justify-content-center align-items-center gap-3" style="color: var(--text-primary);">
                 <div class="d-flex align-items-center gap-2">
-                    <i class="fas fa-user-circle fa-lg"></i>
+                    <i class="fas fa-user-circle fa-lg" style="color: var(--accent-blue);"></i>
                     <span class="fw-bold">{{ article.author }}</span>
                 </div>
-                <span class="opacity-50">|</span>
-                <div class="d-flex align-items-center gap-2">
+                <span style="color: var(--text-secondary);">|</span>
+                <div class="d-flex align-items-center gap-2" style="color: var(--text-secondary);">
                     <i class="far fa-calendar-alt"></i>
                     <span>{{ article.created_at.strftime('%B %d, %Y') }}</span>
                 </div>
@@ -39,16 +41,22 @@
     </div>
 </header>
 
-<section class="section-padding bg-white">
+<section class="section-padding" style="background-color: var(--bg-primary);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                
-                <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
-                    <span class="text-muted small fw-bold text-uppercase">Share this article</span>
+
+                <div class="d-flex justify-content-between align-items-center mb-5 pb-3"
+                    style="border-bottom: 1px solid var(--border-color);">
+                    <span class="small fw-bold text-uppercase font-sora" style="color: var(--text-secondary);">Share
+                        this article</span>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-primary rounded-circle"><a href='https://web.facebook.com/profile.php?id=61582914692395' class="fab fa-facebook-f"></a></button>
-                        <button class="btn btn-sm btn-outline-info rounded-circle"><a href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' class="fab fa-instagram"></a></button>
+                        <button class="btn btn-sm premium-btn-outline rounded-circle hover-lift"><a
+                                href='https://web.facebook.com/profile.php?id=61582914692395'
+                                class="fab fa-facebook-f"></a></button>
+                        <button class="btn btn-sm premium-btn-outline rounded-circle hover-lift"><a
+                                href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='
+                                class="fab fa-instagram"></a></button>
                     </div>
                 </div>
 
@@ -56,8 +64,8 @@
                     {{ article.content | safe }}
                 </div>
 
-                <div class="mt-5 pt-5 border-top d-flex justify-content-center">
-                    <a href="{{ url_for('articles') }}" class="btn btn-outline-dark rounded-pill px-5">
+                <div class="mt-5 pt-5 d-flex justify-content-center" style="border-top: 1px solid var(--border-color);">
+                    <a href="{{ url_for('articles') }}" class="btn premium-btn-outline rounded-pill px-5 hover-lift">
                         <i class="fas fa-th-large me-2"></i> Browse All Articles
                     </a>
                 </div>

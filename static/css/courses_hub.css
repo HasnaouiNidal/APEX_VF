@@ -1,109 +1,226 @@
 /* --- Page Header (Consistent) --- */
-    .page-header {
-        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
-        padding: 5rem 0 3rem;
-        color: white;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
+.page-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+    padding: 5rem 0 3rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
 
-    .header-pattern {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        opacity: 0.1;
-        background-image: radial-gradient(#ffffff 1px, transparent 1px);
-        background-size: 30px 30px;
-    }
+.header-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 30px 30px;
+}
 
-    /* --- Breadcrumbs --- */
-    .breadcrumb-nav {
-        display: inline-flex;
-        background: white;
-        padding: 5px 5px;
-        border-radius: 50px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        margin-top: -25px; /* Pulls it up into header */
-        position: relative;
-        z-index: 10;
-    }
+/* --- Breadcrumbs --- */
+.breadcrumb-nav {
+    display: inline-flex;
+    background: white;
+    padding: 5px 5px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-top: -25px;
+    /* Pulls it up into header */
+    position: relative;
+    z-index: 10;
+}
 
-    .breadcrumb-item-custom {
-        padding: 8px 20px;
-        border-radius: 40px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: #64748b;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
+.breadcrumb-item-custom {
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
 
-    .breadcrumb-item-custom:hover {
-        color: var(--color-primary);
-        background: #f1f5f9;
-    }
+.breadcrumb-item-custom:hover {
+    color: var(--color-primary);
+    background: #f1f5f9;
+}
 
-    .breadcrumb-item-custom.active {
-        background: var(--color-primary);
-        color: white;
-        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
-    }
+.breadcrumb-item-custom.active {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+}
 
-    /* --- Department Cards --- */
-    .dept-card {
-        background: white;
-        border: none;
-        border-radius: 24px;
-        padding: 3rem 2rem;
-        text-align: center;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
+/* --- Department Cards --- */
+.dept-card {
+    background: white;
+    border: none;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
 
-    .dept-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 6px;
-        background: var(--color-secondary); /* Orange Stripe */
-        transition: height 0.3s ease;
-    }
+.dept-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--color-secondary);
+    /* Orange Stripe */
+    transition: height 0.3s ease;
+}
 
-    .dept-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
-    }
+.dept-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+}
 
-    .dept-card:hover::before {
-        height: 10px;
-    }
+.dept-card:hover::before {
+    height: 10px;
+}
 
-    .icon-wrapper {
-        width: 80px;
-        height: 80px;
-        background: #f8fafc;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: #f8fafc;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
 
-    .dept-card:hover .icon-wrapper {
-        background: var(--color-primary);
-        color: white !important;
-    }
-    
-    .dept-card:hover .icon-wrapper i {
-        color: white !important; /* Force icon white on hover */
-    }
+.dept-card:hover .icon-wrapper {
+    background: var(--color-primary);
+    color: white !important;
+}
 
-    .dept-disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        filter: grayscale(1);
-    }
+.dept-card:hover .icon-wrapper i {
+    color: white !important;
+    /* Force icon white on hover */
+}
+
+.dept-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+/* ==========================================================================
+   LIGHT MODE REPAIRS
+   ========================================================================== */
+
+[data-theme="light"] {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #EEF4FF;
+    --surface: #FFFFFF;
+    --surface-muted: #F1F5F9;
+    --surface-elevated: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-soft: #64748B;
+    --border-color: rgba(15, 23, 42, 0.10);
+    --border-strong: rgba(15, 23, 42, 0.16);
+    --accent-blue: #2563EB;
+    --accent-cyan: #06B6D4;
+    --accent-purple: #7C3AED;
+    --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
+    --hero-title: #0F172A;
+    --hero-subtitle: #475569;
+    --pill-bg: #FFFFFF;
+    --pill-hover: #EAF1FF;
+    --card-hover-border: rgba(37, 99, 235, 0.18);
+}
+
+[data-theme="light"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Header Overrides */
+[data-theme="light"] .page-header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .header-title {
+    color: var(--hero-title) !important;
+}
+
+[data-theme="light"] .header-subtitle {
+    color: var(--hero-subtitle) !important;
+    opacity: 1 !important;
+}
+
+/* Breadcrumb Overrides */
+[data-theme="light"] .breadcrumb-nav {
+    background: var(--pill-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+}
+
+[data-theme="light"] .breadcrumb-item-custom {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .breadcrumb-item-custom:hover {
+    background: var(--pill-hover);
+    color: var(--accent-blue);
+}
+
+[data-theme="light"] .breadcrumb-item-custom.active {
+    background: var(--accent-blue);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Card Overrides */
+[data-theme="light"] .dept-card {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-soft);
+}
+
+[data-theme="light"] .dept-card:hover {
+    border-color: var(--card-hover-border);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .dept-card h3 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .dept-card p {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .dept-disabled {
+    background: var(--surface-muted);
+    border: 1px dashed var(--border-color);
+    opacity: 0.8 !important;
+    filter: none;
+}
+
+[data-theme="light"] .dept-disabled h3,
+[data-theme="light"] .dept-disabled p {
+    color: var(--text-soft) !important;
+}
+
+[data-theme="light"] .icon-wrapper {
+    background: var(--surface-muted);
+}
+
+[data-theme="light"] .dept-card:hover .icon-wrapper i {
+    color: #ffffff !important;
+}

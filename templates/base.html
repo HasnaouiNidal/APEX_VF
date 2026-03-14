@@ -1,190 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>{% block title %}APEX{% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
+
     <link rel="icon" href="{{ url_for('static', filename='images/IMG_0513.jpg') }}" type="image/jpg">
-    
+
     {% block styles %}{% endblock %}
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
+
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top custom-navbar">
         <div class="container">
 
-            <a class="navbar-brand" href="{{ url_for('home') }}">
-                <i class="fas fa-mountain me-2"></i>APEX
+            <a class="navbar-brand fw-bold d-flex align-items-center" style="color: var(--color-text-main) !important;"
+                href="{{ url_for('home') }}">
+                <div class="brand-icon-wrapper me-2">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                APEX
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler navbar-dark border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto align-items-center">
-                    
+
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'home' else '' }}" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-link {{ 'active' if request.endpoint == 'home' else '' }}"
+                            href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'events' else '' }}" href="{{ url_for('events') }}">Events</a>
+                        <a class="nav-link {{ 'active' if request.endpoint == 'events' else '' }}"
+                            href="{{ url_for('events') }}">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'articles' else '' }}" href="{{ url_for('articles') }}">Articles</a>
+                        <a class="nav-link {{ 'active' if request.endpoint == 'articles' else '' }}"
+                            href="{{ url_for('articles') }}">Articles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'members' else '' }}" href="{{ url_for('members') }}">Team</a>
+                        <a class="nav-link {{ 'active' if request.endpoint == 'members' else '' }}"
+                            href="{{ url_for('members') }}">Team</a>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-graduation-cap text-warning"></i> Space
+                        <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-graduation-cap text-accent-cyan me-1"></i> Space
                         </a>
-                        <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="studentDropdown">
+                        <ul class="dropdown-menu shadow-xl border-0 custom-dropdown" aria-labelledby="studentDropdown">
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('focus_dashboard') }}">
-                                    <i class="fas fa-brain me-2 text-warning"></i> Focus Room
+                                    <i class="fas fa-brain me-2 text-primary-accent"></i> Focus Room
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider border-secondary-alpha">
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('courses_hub') }}">
-                                    <i class="fas fa-book-open me-2 text-success"></i> Courses
+                                    <i class="fas fa-book-open me-2 text-accent-cyan"></i> Courses
                                 </a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="communityDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="communityDropdown" role="button"
+                            data-bs-toggle="dropdown">
                             Community
                         </a>
-                        <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="communityDropdown">
+                        <ul class="dropdown-menu shadow-xl border-0 custom-dropdown"
+                            aria-labelledby="communityDropdown">
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('lost_found') }}">
-                                    <i class="fas fa-search me-2 text-primary"></i> Lost & Found
+                                    <i class="fas fa-search me-2 text-primary-accent"></i> Lost & Found
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('housing') }}">
-                                    <i class="fas fa-home me-2 text-primary"></i> Housing
+                                    <i class="fas fa-home me-2 text-primary-accent"></i> Housing
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('donations') }}">
-                                    <i class="fas fa-hand-holding-heart me-2 text-primary"></i> Charity
+                                    <i class="fas fa-hand-holding-heart me-2 text-primary-accent"></i> Charity
                                 </a>
                             </li>
                         </ul>
                     </li>
 
                     {% if session.get('email') in ['nidalhasnaoui04@gmail.com', 'khalidouisnaf@gmail.com'] %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="communityDropdown" role="button" data-bs-toggle="dropdown" >
-                                Admin
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu shadow-xl border-0 custom-dropdown" aria-labelledby="adminDropdown">
+                            <a class="dropdown-item" href="{{ url_for('add_event') }}">
+                                <i class="fas fa-calendar-plus me-2 text-secondary-purple"></i> Add Event
                             </a>
-                            <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="communityDropdown">
-                                <a class="dropdown-item" href="{{ url_for('add_event') }}">
-                                    <i class="fas fa-calendar-plus me-2"></i> Add Evente
-                                </a>
-                                <a class="dropdown-item" href="{{ url_for('add_article') }}">
-                                    <i class="fas fa-calendar-plus me-2"></i> Add Article
-                                </a>
-                                <a class="dropdown-item" href="{{ url_for('add_member') }}">
-                                    <i class="fas fa-calendar-plus me-2"></i> Add Membre
-                                </a>
-                                <a class="dropdown-item" href="{{ url_for('add_course') }}">
-                                    <i class="fas fa-calendar-plus me-2"></i> Add Course
-                                </a>
-
-                            </ul>
-                        </li>
+                            <a class="dropdown-item" href="{{ url_for('add_article') }}">
+                                <i class="fas fa-file-alt me-2 text-secondary-purple"></i> Add Article
+                            </a>
+                            <a class="dropdown-item" href="{{ url_for('add_member') }}">
+                                <i class="fas fa-user-plus me-2 text-secondary-purple"></i> Add Member
+                            </a>
+                            <a class="dropdown-item" href="{{ url_for('add_course') }}">
+                                <i class="fas fa-book me-2 text-secondary-purple"></i> Add Course
+                            </a>
+                        </ul>
+                    </li>
                     {% endif %}
                 </ul>
 
-                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                    <button class="btn theme-toggle d-flex align-items-center justify-content-center"
+                        id="theme-switcher" aria-label="Toggle Theme">
+                        <i class="fas fa-moon d-none" id="theme-icon-dark"></i>
+                        <i class="fas fa-sun d-none" id="theme-icon-light"></i>
+                    </button>
                     {% if session.get('loggedin') %}
-                        <a href="{{ url_for('profile') }}" class="btn btn-sm btn-outline-primary rounded-pill px-3 d-flex align-items-center gap-2">
-                            <i class="fas fa-user-circle"></i> Profile
-                        </a>
-                        <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
+                    <a href="{{ url_for('profile') }}"
+                        class="btn btn-outline-light btn-sm rounded-pill px-4 d-flex align-items-center gap-2 m-0 premium-btn-outline">
+                        <i class="fas fa-user-circle"></i> Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}"
+                        class="btn btn-sm btn-outline-danger premium-btn-outline-danger rounded-pill px-3 m-0">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                     {% else %}
-                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-sm px-4 rounded-pill">Login</a>
+                    <a href="{{ url_for('login') }}"
+                        class="btn btn-primary btn-sm px-4 rounded-pill premium-btn fw-semibold">Sign In</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="toast show align-items-center text-white bg-{{ category }} border-0 mb-2" role="alert">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                <i class="fas fa-info-circle me-2"></i> {{ message }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="toast show align-items-center text-white bg-{{ category }} border-0 mb-3 shadow-lg rounded-3"
+            role="alert">
+            <div class="d-flex">
+                <div class="toast-body fw-medium">
+                    <i class="fas fa-info-circle me-2"></i> {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
     </div>
 
-    {% block content %}
-    {% endblock %}
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
 
-    <footer class="footer">
+    <footer class="footer pt-5 pb-4">
         <div class="container">
-            <div class="row">
-                <div class="col-md-5 mb-4">
-                    <h5 class="fw-bold">APEX Club</h5>
-                    <p class="small text-muted" style="max-width: 350px">
-                        <span style='color:whitesmoke'>Making a difference, together. Join our community to learn, grow, and impact the world through science and charity.</span>
+            <div class="row gy-4 mb-5">
+                <div class="col-md-5 pe-lg-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="brand-icon-wrapper me-2">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h4 class="fw-bold mb-0 font-sora">APEX</h4>
+                    </div>
+                    <p class="text-secondary-light lh-lg" style="max-width: 380px">
+                        Making a difference, together. Join our confident community to explore, grow, and impact the
+                        world through continuous iteration.
                     </p>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <h5 class="fw-bold">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="{{ url_for('articles') }}">Articles</a></li>
-                        <li><a href="{{ url_for('members') }}">Our Team</a></li>
+                <div class="col-md-3">
+                    <h5 class="fw-semibold mb-4 font-sora">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="{{ url_for('home') }}" class="text-secondary-light">Overview</a></li>
+                        <li class="mb-2"><a href="{{ url_for('events') }}" class="text-secondary-light">Events</a></li>
+                        <li class="mb-2"><a href="{{ url_for('articles') }}" class="text-secondary-light">Journal</a>
+                        </li>
+                        <li class="mb-2"><a href="{{ url_for('members') }}" class="text-secondary-light">Our Team</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold">Follow Us</h5>
-                    <div class="d-flex gap-2">
-                        <a href="https://web.facebook.com/profile.php?id=61582914692395" target="_blank" class="social-icon">
+                <div class="col-md-4 pl-md-4">
+                    <h5 class="fw-semibold mb-4 font-sora">Connect</h5>
+                    <div class="d-flex gap-3">
+                        <a href="https://web.facebook.com/profile.php?id=61582914692395" target="_blank"
+                            class="social-icon">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon">
+                        <a href="https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            target="_blank" class="social-icon">
                             <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-icon">
+                            <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-top border-secondary pt-4 mt-3 d-flex justify-content-between text-muted small">
-                <span style="color:whitesmoke">&copy; 2026 APEX Club. All Rights Reserved.</span>
-                <span style="color:whitesmoke">Designed by <strong style="color:whitesmoke">Apex Web Team </strong></span>
+            <div
+                class="border-top border-secondary-alpha pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center copyright-text mt-5">
+                <span class="mb-2 mb-md-0">&copy; 2026 APEX Organization. All Rights Reserved.</span>
+                <span>Designed with <i class="fas fa-heart text-accent-cyan mx-1 fs-xs"></i> by <strong
+                        style="color: var(--color-text-main);">Aura Web Team</strong></span>
             </div>
         </div>
     </footer>
@@ -193,7 +244,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS Animation
-        AOS.init({ duration: 800, once: true });
+        AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
 
         // Initialize Bootstrap Toasts
         document.addEventListener('DOMContentLoaded', function () {
@@ -206,4 +257,5 @@
     </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
+
 </html>

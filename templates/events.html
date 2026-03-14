@@ -15,14 +15,14 @@
             <i class="fas fa-star me-1"></i> Active Community
         </span>
         
-        <h1 class="display-4 fw-bold mb-3 text-white">Our Events & Activities</h1>
-        <p class="lead opacity-75 mx-auto text-light" style="max-width: 600px;">
+        <h1 class="display-4 fw-bold mb-3 font-sora">Our Events & Activities</h1>
+        <p class="lead opacity-75 mx-auto" style="max-width: 600px;">
             Memories of the change we are making together. Explore our journey.
         </p>
     </div>
 </header>
 
-<section class="section-padding pt-0 bg-light" style="min-height: 80vh;">
+<section class="section-padding pt-0" style="min-height: 80vh; background-color: var(--bg-primary);">
     <div class="container">
         
         <div class="row justify-content-center mb-5 filter-container" data-aos="fade-up">
@@ -55,13 +55,13 @@
                     </div>
 
                     <div class="card-body p-4 d-flex flex-column">
-                        <h5 class="card-title fw-bold text-dark mb-3">{{ event.title }}</h5>
+                        <h5 class="card-title fw-bold mb-3 font-sora" style="color: var(--text-primary);">{{ event.title }}</h5>
                         
-                        <p class="card-text text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                        <p class="card-text small mb-4 flex-grow-1" style="line-height: 1.6; color: var(--text-secondary);">
                             {{ event.description | truncate(90) }}
                         </p>
                         
-                        <a href="{{ url_for('event_detail', id=event.id) }}" class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-auto">
+                        <a href="{{ url_for('event_detail', id=event.id) }}" class="btn premium-btn-outline w-100 rounded-pill fw-bold mt-auto hover-lift">
                             View Details <i class="fas fa-arrow-right ms-2"></i>
                         </a>
                     </div>
@@ -71,11 +71,11 @@
             {% else %}
             <div class="col-12 text-center py-5">
                 <div class="py-5">
-                    <div class="mb-3 text-muted opacity-25">
+                    <div class="mb-3 opacity-25" style="color: var(--text-secondary);">
                         <i class="fas fa-calendar-times fa-4x"></i>
                     </div>
-                    <h3 class="fw-bold text-secondary">No Events Yet</h3>
-                    <p class="text-muted">We are planning something big! Check back soon.</p>
+                    <h3 class="fw-bold font-sora" style="color: var(--text-primary);">No Events Yet</h3>
+                    <p style="color: var(--text-secondary);">We are planning something big! Check back soon.</p>
                 </div>
             </div>
             {% endfor %}
@@ -88,14 +88,14 @@
     </div>
 </section>
 
-<section class="section-padding bg-white">
+<section class="section-padding" style="background-color: var(--bg-secondary);">
     <div class="container">
         <div class="cta-box text-center text-white shadow-lg" data-aos="zoom-in">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <h2 class="fw-bold mb-3 text-white">Have an Idea for an Event?</h2>
-                    <p class="mb-4 opacity-75 lead">We are always open to new initiatives to help the community. If you have a vision, we have the team.</p>
-                    <a href="instagram_acc" class="btn btn-light text-primary btn-lg rounded-pill px-5 fw-bold shadow">
+                    <h2 class="fw-bold mb-3 text-white font-sora">Have an Idea for an Event?</h2>
+                    <p class="mb-4 opacity-75 lead" style="color: #F8FAFC;">We are always open to new initiatives to help the community. If you have a vision, we have the team.</p>
+                    <a href="instagram_acc" class="btn btn-white-premium btn-lg rounded-pill px-5 fw-bold shadow hover-lift">
                         Contact Us Now
                     </a>
                 </div>

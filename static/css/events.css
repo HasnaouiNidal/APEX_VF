@@ -1,145 +1,218 @@
-  /* --- PAGE HEADER SPECIFIC CSS --- */
-    .page-header {
-        /* Matches your Primary Blue Brand */
-        background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
-        padding: 6rem 0 4rem; /* Spacing for Navbar */
-        position: relative;
-        overflow: hidden;
-        color: white;
-        text-align: center;
-    }
+/* --- THEME VARIABLES --- */
+:root,
+[data-theme="dark"] {
+    --bg-primary: #070B14;
+    --bg-secondary: #0B1220;
+    --surface: #0F172A;
+    --surface-muted: #111827;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-blue: #4DA2FF;
+    --accent-cyan: #6EE7FF;
+    --accent-purple: #7C5CFF;
+}
 
-    /* Background Pattern (Optional subtle decoration) */
-    .header-pattern {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        opacity: 0.1;
-        background-image: radial-gradient(#ffffff 1px, transparent 1px);
-        background-size: 30px 30px;
-    }
+[data-theme="light"] {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #EEF4FF;
+    --surface: #FFFFFF;
+    --surface-muted: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --accent-blue: #2563EB;
+    --accent-cyan: #06B6D4;
+    --accent-purple: #7C3AED;
+}
 
-    /* --- FILTER BAR --- */
-    .filter-container {
-        transform: translateY(-50%); /* Pulls it up into the header/section gap */
-        z-index: 10;
-        position: relative;
-    }
+/* --- PAGE HEADER SPECIFIC CSS --- */
+.page-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    padding: 6rem 0 4rem;
+    /* Spacing for Navbar */
+    position: relative;
+    overflow: hidden;
+    color: var(--text-primary);
+    text-align: center;
+}
 
-    .filter-box {
-        background: #ffffff;
-        padding: 10px 15px;
-        border-radius: 50px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        display: inline-flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(77, 162, 255, 0.15) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+}
 
-    .filter-btn {
-        border: none;
-        background: transparent;
-        color: #64748b;
-        font-weight: 600;
-        padding: 8px 24px;
-        border-radius: 40px;
-        transition: all 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-    }
+/* Background Pattern (Optional subtle decoration) */
+.header-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image: radial-gradient(var(--text-secondary) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
 
-    .filter-btn:hover {
-        color: var(--color-primary);
-        background-color: #f1f5f9;
-    }
+/* --- FILTER BAR --- */
+.filter-container {
+    transform: translateY(-50%);
+    /* Pulls it up into the header/section gap */
+    z-index: 10;
+    position: relative;
+}
 
-    .filter-btn.active {
-        background-color: var(--color-primary);
-        color: #ffffff;
-        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
-    }
+.filter-box {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
 
-    /* --- EVENT CARDS --- */
-    .event-card {
-        border: none;
-        border-radius: 20px;
-        background: #fff;
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-        overflow: hidden;
-        height: 100%;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
+.filter-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
 
-    .event-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
-    }
+.filter-btn:hover {
+    color: var(--accent-blue);
+    background-color: var(--surface-muted);
+}
 
-    .event-img-wrapper {
-        position: relative;
-        overflow: hidden;
-        height: 240px;
-    }
+.filter-btn.active {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(77, 162, 255, 0.3);
+}
 
-    .event-img-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
+/* --- EVENT CARDS --- */
+.event-card {
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--surface);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
 
-    .event-card:hover .event-img-wrapper img {
-        transform: scale(1.05); /* Zoom effect */
-    }
+.event-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.15);
+}
 
-    /* Custom Date Badge */
-    .date-badge {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 12px;
-        padding: 8px 12px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        min-width: 70px;
-    }
+.event-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 240px;
+    border-bottom: 1px solid var(--border-color);
+}
 
-    .date-badge .month {
-        display: block;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: var(--color-secondary); /* Orange */
-        letter-spacing: 1px;
-    }
+.event-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
 
-    .date-badge .day {
-        display: block;
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #1e293b;
-        line-height: 1;
-        margin-top: 2px;
-    }
+.event-card:hover .event-img-wrapper img {
+    transform: scale(1.05);
+    /* Zoom effect */
+}
 
-    .category-badge {
-        position: absolute;
-        bottom: 15px;
-        left: 15px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 30px;
-        background: rgba(15, 23, 42, 0.8);
-        color: white;
-        backdrop-filter: blur(4px);
-    }
+/* Custom Date Badge */
+.date-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-width: 70px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
 
-    /* --- CTA SECTION --- */
-    .cta-box {
-        background: linear-gradient(135deg, var(--color-primary), #1e3a8a);
-        border-radius: 24px;
-        padding: 4rem 2rem;
-        position: relative;
-        overflow: hidden;
-    }
+.date-badge .month {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 1px;
+}
+
+.date-badge .day {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.category-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 30px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.category-badge i {
+    color: var(--accent-purple);
+}
+
+/* --- CTA SECTION --- */
+.cta-box {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 24px;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(77, 162, 255, 0.2);
+}
+
+.cta-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}

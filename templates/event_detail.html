@@ -3,44 +3,51 @@
 {% block title %}APEX | {{ event.title }}{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/event_detail.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/event_detail.css') }}">
 {% endblock %}
 
 
 {% block content %}
 
-<header class="event-header w-100" style="background-image: url('{{ url_for('static', filename='uploads/images/' + event.image) }}');">
-    
+<header class="event-header w-100"
+    style="background-image: url('{{ url_for('static', filename='uploads/images/' + event.image) }}');">
+
     <div class="event-overlay"></div>
-    
+
     <div class="container h-100 d-flex align-items-end pb-5 position-relative" style="z-index: 2;">
         <div class="col-lg-9">
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 shadow-sm fw-bold">
+            <span class="badge event-badge-overlay mb-3 px-3 py-2 shadow-sm fw-bold">
                 {{ event.category }}
             </span>
-            
+
             <h1 class="display-3 fw-bold mb-3 text-white text-shadow-lg">
                 {{ event.title }}
             </h1>
-            
+
             <div class="d-flex align-items-center mt-3 text-white text-shadow-lg">
-                <i class="far fa-calendar-alt me-2 text-warning"></i>
+                <i class="far fa-calendar-alt me-2" style="color: var(--accent-cyan);"></i>
                 <span class="fs-5 fw-medium">{{ event.date_str }}</span>
             </div>
         </div>
     </div>
 </header>
 
-<section class="section-padding bg-white">
+<section class="section-padding" style="background-color: var(--bg-primary);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                
-                <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
-                    <span class="text-muted small fw-bold text-uppercase">Share Event</span>
+
+                <div class="d-flex justify-content-between align-items-center mb-5 pb-3"
+                    style="border-bottom: 1px solid var(--border-color);">
+                    <span class="small fw-bold text-uppercase font-sora" style="color: var(--text-secondary);">Share
+                        Event</span>
                     <div>
-                        <button class="btn btn-sm btn-outline-primary rounded-circle"><a href='https://web.facebook.com/profile.php?id=61582914692395' class="fab fa-facebook-f"></a></button>
-                        <button class="btn btn-sm btn-outline-info rounded-circle"><a href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' class="fab fa-instagram"></a></button>
+                        <button class="btn btn-sm premium-btn-outline rounded-circle hover-lift"><a
+                                href='https://web.facebook.com/profile.php?id=61582914692395'
+                                class="fab fa-facebook-f"></a></button>
+                        <button class="btn btn-sm premium-btn-outline rounded-circle hover-lift"><a
+                                href='https://www.instagram.com/apexoncampus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='
+                                class="fab fa-instagram"></a></button>
                     </div>
                 </div>
 
@@ -48,8 +55,9 @@
                     {{ event.content | safe }}
                 </div>
 
-                <div class="mt-5 pt-5 border-top d-flex justify-content-between align-items-center">
-                    <a href="{{ url_for('events') }}" class="btn btn-outline-dark rounded-pill px-4">
+                <div class="mt-5 pt-5 d-flex justify-content-between align-items-center"
+                    style="border-top: 1px solid var(--border-color);">
+                    <a href="{{ url_for('events') }}" class="btn premium-btn-outline rounded-pill px-4 hover-lift">
                         <i class="fas fa-arrow-left me-2"></i> Back to All Events
                     </a>
                 </div>

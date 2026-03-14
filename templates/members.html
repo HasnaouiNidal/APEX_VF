@@ -3,151 +3,178 @@
 {% block title %}APEX | Our Team{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/members.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/members.css') }}">
 {% endblock %}
 
 {% block content %}
 
 <header class="page-header">
     <div class="header-pattern"></div>
+    <div class="header-glow"></div>
     <div class="container position-relative z-2">
-        <span class="badge bg-white text-primary rounded-pill px-3 py-2 mb-3 shadow fw-bold">
+        <span class="badge premium-badge mb-3 shadow-soft fw-bold">
             <i class="fas fa-users me-1"></i> The APEX Family
         </span>
-        
-        <h1 class="display-4 fw-bold mb-3" style="color:whitesmoke">Meet The Team</h1>
-        <p class="lead opacity-75 mx-auto" style="max-width: 600px;">
+
+        <h1 class="display-4 fw-bold mb-3 header-title">Meet The Team</h1>
+        <p class="lead opacity-75 mx-auto header-subtitle" style="max-width: 600px;">
             The dedicated students working behind the scenes to make a difference.
         </p>
     </div>
 </header>
 
-<section class="section-padding bg-light" style="min-height: 85vh;">
+<section class="section-padding theme-bg-primary theme-transition" style="min-height: 85vh;">
     <div class="container">
 
+        <!-- THE BOARD -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title">The Board</h3>
+            <h3 class="team-section-title board-title">The Board</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'Board' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-board">Leader</span>
-                            </div>
+                {% if member.team == 'Board' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card board-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-board">Leader</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
-        <hr class="my-5 opacity-25">
+        <div class="section-divider my-5"></div>
 
+        <!-- MEDIA TEAM -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title" style="color: #EE5253;">Media Team</h3>
+            <h3 class="team-section-title">Media Team</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'Media' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-media">Media</span>
-                            </div>
+                {% if member.team == 'Media' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-media">Media</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
+        <!-- COMMUNICATION -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title" style="color: #2e86de;">Communication</h3>
+            <h3 class="team-section-title">Communication</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'Communication' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-comm">Communication</span>
-                            </div>
+                {% if member.team == 'Communication' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-comm">Communication</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
+        <!-- CONTENT DEVELOPMENT -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title" style="color: #10ac84;">Content Development</h3>
+            <h3 class="team-section-title">Content Development</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'Content' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-content">Content</span>
-                            </div>
+                {% if member.team == 'Content' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-content">Content</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
+        <!-- ORGANIZING COMMITTEE -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title" style="color: #f368e0;">Organizing Committee</h3>
+            <h3 class="team-section-title">Organizing Committee</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'Organizing' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-org">Organizer</span>
-                            </div>
+                {% if member.team == 'Organizing' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-org">Organizer</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
+        <!-- IT & TECH -->
         <div class="text-center mb-5" data-aos="fade-up">
-            <h3 class="team-section-title" style="color: #5f27cd;">IT & Tech</h3>
+            <h3 class="team-section-title">IT & Tech</h3>
             <div class="row justify-content-center g-4">
                 {% for member in members %}
-                    {% if member.team == 'IT' %}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member-card">
-                                <div class="img-wrapper">
-                                    <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}" class="member-img" alt="{{ member.first_name }}">
-                                </div>
-                                <h5 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h5>
-                                <p class="text-muted small mb-0">{{ member.role }}</p>
-                                <span class="team-badge badge-it">Developer</span>
-                            </div>
+                {% if member.team == 'IT' %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="member-card">
+                        <div class="img-wrapper">
+                            <img src="{{ url_for('static', filename='uploads/profiles/' + member.profile_image) }}"
+                                class="member-img" alt="{{ member.first_name }}">
                         </div>
-                    {% endif %}
+                        <h5 class="fw-bold mb-1 member-name">{{ member.first_name }} {{ member.last_name }}</h5>
+                        <p class="small mb-0 member-role">{{ member.role }}</p>
+                        <span class="team-badge badge-it">Developer</span>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
 
     </div>
 </section>
+
+<!-- Theme Initialization Script -->
+<script>
+    (function () {
+        // Retrieve theme from localStorage, default to 'dark'
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Listen for standard theme toggle events (assuming standard implementation elsewhere in site)
+        window.addEventListener('themeToggled', function (e) {
+            document.documentElement.setAttribute('data-theme', e.detail.theme);
+        });
+    })();
+</script>
 
 {% endblock %}
